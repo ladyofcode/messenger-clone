@@ -10,12 +10,16 @@ import {
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 import { ContactsService } from './contacts.service';
 
 @UseGuards(SessionGuard)
 @Controller('contacts')
 export class ContactsController {
-  constructor(private contactService: ContactsService) {}
+  constructor(
+    private contactService: ContactsService,
+    private userService: UserService,
+  ) {}
 
   @Get()
   async listFor(@CurrentUser() user: User) {
@@ -23,8 +27,12 @@ export class ContactsController {
   }
 
   @Post()
-  async create(@CurrentUser() user: User, @Body('userId') otherUserId: number) {
-    return this.contactService.create(user.id, otherUserId);
+  async create(
+    @CurrentUser() user: User,
+    @Body('email') otherUserEmail: string,
+  ) {
+    const otherUser = await this.userService.findOneByEmail(otherUserEmail);
+    return this.contactService.create(user.id, otherUser.id);
   }
 
   @Delete(':userId')

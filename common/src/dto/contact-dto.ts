@@ -19,5 +19,5 @@ export const groupResource = {
 export type ContactDTO = UserDTO[];
 
 export interface CreateContactDTO {
-  userId: number;
+  email: string;
 }
