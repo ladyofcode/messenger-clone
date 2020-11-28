@@ -1,15 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Home from './pages/Home/Home';
-import Registration from './pages/Registration/Registration'
+import React from "react";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { routes } from "./config/";
+import { IRoute } from "./config/routes";
 
 function App() {
   return (
     <div className="App">
-
-      <Registration />
-      
+      <Router>
+        <Switch>
+          {routes.map((route: IRoute) => (
+            <Route {...route} />
+          ))}
+        </Switch>
+      </Router>
     </div>
   );
 }
