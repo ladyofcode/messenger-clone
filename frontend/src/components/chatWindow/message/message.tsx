@@ -1,11 +1,9 @@
-import styled from 'styled-components';
-
 export function Message(props) {
   return (
     <div className="message">
-      { props.username &&
+      { props.name &&
         <div className="username">
-          <p>{ props.username } says:</p>
+          <p>{ props.name } says:</p>
         </div>
       }
       <div className="text">
@@ -14,5 +12,3 @@ export function Message(props) {
     </div>
   );
 }
-
-
