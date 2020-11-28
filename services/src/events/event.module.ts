@@ -8,7 +8,7 @@ import { EventGateway } from './event.gateway';
 import { EventService } from './event.service';
 
 @Module({
-  imports: [AuthenticationModule],
+  imports: [],
   controllers: [],
   providers: [EventGateway, EventService],
 })

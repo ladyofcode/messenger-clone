@@ -10,8 +10,8 @@ import { LocalStrategy } from './local.strategy';
 import { SessionGuard } from './session.guard';
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, TypeOrmModule.forFeature([User])],
   controllers: [AuthenticationController],
-  providers: [LocalStrategy, AuthenticationService, SessionGuard],
+  providers: [LocalStrategy, AuthenticationService, SessionGuard, UserService],
 })
 export class AuthenticationModule {}

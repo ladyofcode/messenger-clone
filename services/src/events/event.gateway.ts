@@ -1,4 +1,3 @@
-import { Req } from '@nestjs/common';
 import {
   MessageBody,
   SubscribeMessage,
@@ -20,18 +19,12 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   constructor(private eventService: EventService) {}
 
-  async handleConnection(@Req() req: any) {
-    console.log(req.cookies);
+  async handleConnection() {
     //this.server.emit('users', 'ok');
   }
 
   async handleDisconnect() {
     //this.server.emit('users', 'ok')
-  }
-
-  @SubscribeMessage('events')
-  handleEvent(@MessageBody() data: string): string {
-    return data;
   }
 
   afterInit(server: Server) {
