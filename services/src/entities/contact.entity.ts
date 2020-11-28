@@ -1,11 +1,16 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { User } from './user.entity';
 
-@Entity()
+@Entity({ name: 'contacts' })
 export class Contact {
-  @Column()
-  user1: any;
-  @Column()
-  user2: any;
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  // @Column()
+  @ManyToOne(() => User)
+  user1: User;
+  @ManyToOne(() => User)
+  user2: User;
 
   @Column('timestamp')
   createdAt: any;

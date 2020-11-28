@@ -1,23 +1,19 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { CreateMessageDTO } from '../../../common/src/dto/message-dto';
+import { CreateMessageDTO } from '@shared/dto/message-dto';
 
-@Controller('messages')
+@Controller('groups/:groupId/messages')
 export class MessagesController {
   constructor(private messagesService: MessagesService) {}
 
   @Get()
-  async all() {
-    // TODO: get user from auth
-    const user = null;
-    return this.messagesService.listAll(user);
+  async all(@Param('groupId') groupId: number) {
+    return this.messagesService.listAll(groupId);
   }
 
   @Post()
   async create(@Body() { groupId, message }: CreateMessageDTO) {
-    // TODO: get user from auth
-    const user = null;
-    return this.messagesService.create(user, groupId, message);
+    return this.messagesService.create(groupId, message);
   }
 
   @Delete(':id')

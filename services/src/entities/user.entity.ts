@@ -1,6 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Unique,
+  ManyToMany,
+  JoinTable,
+  OneToMany,
+} from 'typeorm';
+import { Group } from './group.entity';
 
-@Entity()
+@Entity({ name: 'users' })
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
@@ -26,4 +35,7 @@ export class User {
 
   @Column('timestamp')
   updatedAt: Date;
+
+  @ManyToMany(() => Group, (group) => group.users)
+  groups: Group[];
 }

@@ -4,14 +4,10 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
-import {
-  CreateGroupDTO,
-  UpdateGroupDTO,
-} from '../../../common/src/dto/group-dto';
+import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';
 import { GroupsService } from './groups.service';
 
 @Controller('groups')
@@ -20,9 +16,7 @@ export class GroupsController {
 
   @Get()
   async allForCurrentUser() {
-    // TODO: get user from auth
-    const user = null;
-    return this.groupsService.allFor(user);
+    return await this.groupsService.allFor(1);
   }
 
   @Post()
