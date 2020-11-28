@@ -1,15 +1,15 @@
 import { AuthenticationController } from './authentication.controller';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { Module, Global } from '@nestjs/common';
 import { UserModule } from 'src/user/user.module';
-import { UserService } from 'src/user/user.service';
 import { AuthenticationService } from './authentication.service';
 import { LocalStrategy } from './local.strategy';
+import { SessionGuard } from './session.guard';
 
+@Global()
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([User])],
+  imports: [UserModule],
   controllers: [AuthenticationController],
-  providers: [LocalStrategy, AuthenticationService, UserService],
+  providers: [LocalStrategy, AuthenticationService, SessionGuard],
+  exports: [SessionGuard],
 })
 export class AuthenticationModule {}
