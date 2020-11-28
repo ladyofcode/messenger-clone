@@ -10,6 +10,8 @@ import {
 import { MessagesService } from './messages.service';
 import { CreateMessageDTO } from '@shared/dto/message-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
+import { User } from 'src/entities/user.entity';
+import { CurrentUser } from 'src/authentication/user.decorator';
 @UseGuards(SessionGuard)
 @Controller('groups/:groupId/messages')
 export class MessagesController {
@@ -21,8 +23,11 @@ export class MessagesController {
   }
 
   @Post()
-  async create(@Body() { groupId, message }: CreateMessageDTO) {
-    return this.messagesService.create(groupId, message);
+  async create(
+    @Body() { groupId, message }: CreateMessageDTO,
+    @CurrentUser() user: User,
+  ) {
+    return this.messagesService.create(user.id, groupId, message);
   }
 
   @Delete(':id')
