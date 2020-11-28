@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 import { Req } from '@nestjs/common';
-=======
-import { UseGuards } from '@nestjs/common';
->>>>>>> Stashed changes
 import {
   MessageBody,
   SubscribeMessage,
@@ -13,7 +9,6 @@ import {
   OnGatewayConnection,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
-import { SessionGuard } from 'src/authentication/session.guard';
 import { EventService } from './event.service';
 
 @WebSocketGateway(30001, {
