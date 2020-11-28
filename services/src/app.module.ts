@@ -5,13 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    UserModule,
-    AuthenticationModule
-  ],
+  imports: [UserModule, AuthenticationModule],
   controllers: [AppController],
-  providers: [
-    AppService
-  ],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

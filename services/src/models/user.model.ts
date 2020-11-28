@@ -1,19 +1,16 @@
-
 //@Note: may likely change it to a class.
 //@todo: Using TypeORM?
 
 export type User = {
+  id: any;
 
-    id:any
+  //@todo: firstName instead?
+  name: string;
+  lastName: string;
 
-    //@todo: firstName instead?
-    name: string
-    lastName: string
+  email: string;
 
-    email:string
-
-    //epoch? 
-    createdAt: any
-    updatedAt: any
-
-}
+  //epoch?
+  createdAt: any;
+  updatedAt: any;
+};
