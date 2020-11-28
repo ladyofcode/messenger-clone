@@ -1,29 +1,34 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { SessionGuard } from 'src/authentication/session.guard';
+import { CurrentUser } from 'src/authentication/user.decorator';
+import { User } from 'src/entities/user.entity';
 import { ContactsService } from './contacts.service';
 
 @UseGuards(SessionGuard)
-@Controller('users/:userId/contacts')
+@Controller('contacts')
 export class ContactsController {
   constructor(private contactService: ContactsService) {}
 
   @Get()
-  async listFor(@Param('userId') userId: number) {
-    return this.contactService.listFor(userId);
+  async listFor(@CurrentUser() user: User) {
+    return this.contactService.listFor(user.id);
   }
 
   @Post()
-  async create(
-    @Param('userId') userId: number,
-    @Body('userId') otherUserId: number,
-  ) {
-    return this.contactService.create(userId, otherUserId);
+  async create(@CurrentUser() user: User, @Body('userId') otherUserId: number) {
+    return this.contactService.create(user.id, otherUserId);
   }
 
-  async delete(
-    @Param('userId') userId: number,
-    @Body('userId') otherUserId: number,
-  ) {
-    return this.contactService.remove(userId, otherUserId);
+  @Delete(':userId')
+  async delete(@CurrentUser() user: User, @Body('userId') otherUserId: number) {
+    return this.contactService.remove(user.id, otherUserId);
   }
 }
