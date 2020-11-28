@@ -25,7 +25,12 @@ async function makeRequest<T>(
 
     if (contentType && contentType.includes("application/json")) {
       const data = await response.json();
-      _response.data = data;
+
+      if (data.error || data.statusCode === 401) {
+        _response.error = data.error || data?.message;
+      } else {
+        _response.data = data;
+      }
     }
   } catch (err) {
     _response.data = null;

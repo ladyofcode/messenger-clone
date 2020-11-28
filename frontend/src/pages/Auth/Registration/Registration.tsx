@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { useInput } from "../../../hooks/useInput";
 import { Styled } from "../Auth.styles";
@@ -20,13 +20,23 @@ const initialValue: IInputValues = {
 };
 
 const Registration: React.FC<IRegistrationProps> = () => {
+  const history = useHistory();
   const { registerAccount } = useAuth();
-  const { inputProps, values } = useInput<IInputValues>(initialValue);
+  const { inputProps, values, isEmpty } = useInput<IInputValues>(initialValue);
   const { loading, isAuthenticated } = useAuth();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    registerAccount(values);
+
+    if (isEmpty()) {
+      return;
+    }
+
+    const success = await registerAccount(values);
+
+    if (success) {
+      history.push("/login");
+    }
   };
 
   if (!loading && isAuthenticated) {
@@ -36,7 +46,7 @@ const Registration: React.FC<IRegistrationProps> = () => {
   return (
     <Styled.Background>
       {/* Tabbs her implementation of an avatar */}
-      <div></div>
+      <div className="div"></div>
 
       <form onSubmit={handleSubmit}>
         <label>First Name</label>

@@ -47,9 +47,7 @@ const list: MessageDTO[] = [
 const customGroupName = ["Some friends", "Online", "Offline"];
 
 const Home: React.FC = () => {
-  const { user } = useAuth();
-
-  console.log({ user });
+  const { logoutAccount } = useAuth();
 
   return (
     <React.Fragment>
@@ -66,6 +64,13 @@ const Home: React.FC = () => {
           </div>
           <p>Donny says he's going insane - but he's already there</p>
         </div>
+        {/* remove this whenever */}
+        <button
+          style={{ width: "100px", height: "50px" }}
+          onClick={() => logoutAccount()}
+        >
+          logout
+        </button>
       </Styled.TopBar>
 
       <Styled.GroupsContainer>

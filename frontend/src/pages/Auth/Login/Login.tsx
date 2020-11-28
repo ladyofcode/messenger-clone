@@ -2,8 +2,8 @@ import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useInput } from "../../../hooks/useInput";
 import { useAuth } from "../../../hooks/services/useAuth";
-import { Transition } from "../../../components";
 import { Styled } from "../Auth.styles";
+import Spinner from "../Spinner";
 
 interface ILoginProps {}
 
@@ -31,10 +31,10 @@ export const initialSettings: IAccountSettings = {
 
 const Login: React.FC<ILoginProps> = () => {
   const { inputProps, values, isEmpty } = useInput<IInputValues>(initialValue);
-  const { loading, loginAccount, isAuthenticated } = useAuth();
+  const { loading, loginAccount, isAuthenticated, error } = useAuth();
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
 
     if (isEmpty()) return;
 
@@ -47,12 +47,12 @@ const Login: React.FC<ILoginProps> = () => {
 
   return (
     <>
-      {loading && <Transition />}
       <Styled.Background>
         {/* Tabbs her implementation of an avatar */}
-        <div></div>
+        <div className="div"></div>
 
         <form onSubmit={handleSubmit}>
+          {error && <b style={{ marginBottom: ".5rem" }}>{error}</b>}
           <label>Email</label>
           <input type="email" name="email" {...inputProps("email")} required />
 
@@ -107,9 +107,13 @@ const Login: React.FC<ILoginProps> = () => {
             Don't have an account?
           </Link>
 
-          <button type="submit" value="Submit">
-            Login
-          </button>
+          {loading ? (
+            <button disabled={true}>
+              <Spinner />
+            </button>
+          ) : (
+            <button value="Submit">Login</button>
+          )}
         </form>
       </Styled.Background>
     </>

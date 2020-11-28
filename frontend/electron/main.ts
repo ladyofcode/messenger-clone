@@ -9,8 +9,10 @@ let win: BrowserWindow | null = null;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 600,
+    minWidth: 600,
+    height: 800,
+    minHeight: 800,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -35,7 +37,7 @@ function createWindow() {
         "..",
         "node_modules",
         ".bin",
-        "electron"
+        "electron",
       ),
       forceHardReset: true,
       hardResetMethod: "exit",

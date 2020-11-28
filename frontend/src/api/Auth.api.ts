@@ -4,7 +4,7 @@ import {
   LoginResponseDTO,
   RegisterDTO,
 } from "../common/dto/auth-dto";
-import { UserResource } from "../common/dto/user-dto";
+import { UserDTO, UserResource } from "../common/dto/user-dto";
 import { makeRequest } from "../utils/makeRequest";
 
 class AuthApi {
@@ -45,7 +45,7 @@ class AuthApi {
 
     const endpoint = path();
 
-    return makeRequest(endpoint, {
+    return makeRequest<UserDTO | null>(endpoint, {
       method,
     });
   }

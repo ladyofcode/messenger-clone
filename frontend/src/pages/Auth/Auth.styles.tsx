@@ -19,7 +19,7 @@ const Background = styled.div`
   align-items: center;
   color: #1e2354;
 
-  div {
+  .div {
     background-color: purple;
     width: 200px;
     height: 200px;

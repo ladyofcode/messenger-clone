@@ -4,12 +4,14 @@ import { authApi } from "../../api/Auth.api";
 import { LoginDTO, RegisterDTO } from "../../common/dto/auth-dto";
 
 interface IUserContext {
-  user: UserDTO;
-  registerAccount: (payload: RegisterDTO) => void;
-  loginAccount: (payload: LoginDTO) => void;
-  fetchUserData: () => void;
+  user: UserDTO | null;
+  registerAccount: (payload: RegisterDTO) => Promise<boolean>;
+  loginAccount: (payload: LoginDTO) => Promise<void>;
+  logoutAccount: () => Promise<void>;
+  fetchUserData: () => Promise<void>;
   isAuthenticated: boolean;
   loading: boolean;
+  error: string | null;
 }
 
 const userContext = createContext<IUserContext | null>(null);
@@ -19,8 +21,8 @@ interface IUserProviderProps {
 }
 
 export const AuthProvider = ({ children }: IUserProviderProps) => {
-  const user = useAuthProvider();
-  return <userContext.Provider value={user}>{children}</userContext.Provider>;
+  const auth = useAuthProvider();
+  return <userContext.Provider value={auth}>{children}</userContext.Provider>;
 };
 
 // Better way (c) ian
@@ -30,15 +32,17 @@ export const useAuth = (): IUserContext => {
 
 const useAuthProvider = () => {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserDTO | null>(null);
+  const [error, setError] = useState(null);
 
   const registerAccount = async (payload: RegisterDTO) => {
     const { error } = await authApi.register(payload);
 
     if (error) {
-      console.log("Could not register account ", error);
-      return;
+      return false;
     }
+
+    return true;
   };
 
   const loginAccount = async (payload: LoginDTO) => {
@@ -47,7 +51,8 @@ const useAuthProvider = () => {
     const { error, data } = await authApi.login(payload);
 
     if (error) {
-      console.error("Could not login");
+      setError(error);
+      setLoading(false);
       return;
     }
 
@@ -57,13 +62,18 @@ const useAuthProvider = () => {
 
   const fetchUserData = async () => {
     setLoading(true);
-    const userData = await authApi.me();
-    setUser(userData);
+    const { data, error } = await authApi.me();
+
+    setUser(error ? null : data);
     setLoading(false);
   };
 
+  const logoutAccount = async () => {
+    await authApi.logout();
+    setUser(null);
+  };
+
   useEffect(() => {
-    // auth/login
     if (!user) {
       fetchUserData();
     }
@@ -75,8 +85,10 @@ const useAuthProvider = () => {
     user,
     registerAccount,
     loginAccount,
+    logoutAccount,
     fetchUserData,
     isAuthenticated,
     loading,
+    error,
   };
 };
