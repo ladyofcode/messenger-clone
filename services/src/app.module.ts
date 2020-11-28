@@ -11,6 +11,9 @@ import { Message } from './entities/message.entity';
 import { Contact } from './entities/contact.entity';
 import { Group } from './entities/group.entity';
 import { ContactsModule } from './contacts/contacts.module';
+import { EventGateway } from './events/event.gateway';
+import { EventService } from './events/event.service';
+
 @Module({
   imports: [
     AuthenticationModule,
@@ -30,6 +33,6 @@ import { ContactsModule } from './contacts/contacts.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EventGateway, EventService],
 })
 export class AppModule {}

@@ -5,7 +5,7 @@ import { AuthenticationService } from './authentication.service';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private auth: AuthenticationService) {
-    super({ usernameField: 'email' });
+    super({ usernameField: 'email'});
   }
 
   async validate(email: string, password: string): Promise<any> {
@@ -13,6 +13,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException();
     }
+    
     return user;
   }
 }

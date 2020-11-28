@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserStatus } from '@shared/dto/user-dto';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 
@@ -31,9 +32,25 @@ export class UserService {
       email: string;
       password: string;
       username: string;
+      status: UserStatus;
+      statusMessage: string | null;
     }>,
   ) {
-    return this.usersRepository.update({ id }, updates);
+    return this.usersRepository.update({ id },updates);
+  }
+
+  async create(
+    create: Optional<{
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+      username: string;
+    }>,
+  ) {
+    
+    const user = this.usersRepository.create(create);
+    return this.usersRepository.save(user);
   }
 
   async remove(id: string): Promise<void> {

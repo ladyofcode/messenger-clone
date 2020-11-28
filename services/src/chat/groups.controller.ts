@@ -6,10 +6,13 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';
+import { SessionGuard } from 'src/authentication/session.guard';
 import { GroupsService } from './groups.service';
 
+@UseGuards(SessionGuard)
 @Controller('groups')
 export class GroupsController {
   constructor(private groupsService: GroupsService) {}

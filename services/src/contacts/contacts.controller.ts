@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { SessionGuard } from 'src/authentication/session.guard';
 import { ContactsService } from './contacts.service';
 
+@UseGuards(SessionGuard)
 @Controller('users/:userId/contacts')
 export class ContactsController {
   constructor(private contactService: ContactsService) {}
