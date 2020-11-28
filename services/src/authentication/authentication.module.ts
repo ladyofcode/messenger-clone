@@ -7,10 +7,11 @@ import { UserService } from 'src/user/user.service';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { LocalStrategy } from './local.strategy';
+import { SessionGuard } from './session.guard';
 
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([User])],
+  imports: [UserModule],
   controllers: [AuthenticationController],
-  providers: [LocalStrategy, AuthenticationService, UserService],
+  providers: [LocalStrategy, AuthenticationService, SessionGuard],
 })
 export class AuthenticationModule {}
