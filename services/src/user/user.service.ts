@@ -27,6 +27,7 @@ export class UserService {
       email: string;
       password: string;
       username: string;
+      status: string;
     }>,
   ) {
     return this.usersRepository.update({ id }, updates);
