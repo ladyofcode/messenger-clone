@@ -1,3 +1,4 @@
+import { AuthenticationController } from './authentication.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
@@ -8,7 +9,7 @@ import { LocalStrategy } from './local.strategy';
 
 @Module({
   imports: [UserModule, TypeOrmModule.forFeature([User])],
-  controllers: [],
+  controllers: [AuthenticationController],
   providers: [LocalStrategy, AuthenticationService, UserService],
 })
 export class AuthenticationModule {}

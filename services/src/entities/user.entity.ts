@@ -6,6 +6,8 @@ import {
   ManyToMany,
   JoinTable,
   OneToMany,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm';
 import { Group } from './group.entity';
 
@@ -25,15 +27,12 @@ export class User {
   email: string;
 
   @Column()
-  username: string;
-
-  @Column()
   password: string;
 
-  @Column('timestamp')
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: any;
 
-  @Column('timestamp')
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
   updatedAt: Date;
 
   @ManyToMany(() => Group, (group) => group.users)

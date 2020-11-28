@@ -36,6 +36,21 @@ export class UserService {
     return this.usersRepository.update({ id }, updates);
   }
 
+  async create(
+    create: Optional<{
+      firstName: string;
+      lastName: string;
+      email: string;
+      password: string;
+      username: string;
+    }>,
+  ) {
+    console.log(create);
+    
+    const user = this.usersRepository.create(create);
+    return this.usersRepository.save(user);
+  }
+
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
