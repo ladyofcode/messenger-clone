@@ -1,4 +1,5 @@
 import React from "react";
+import { Styled } from "./Registration.styles";
 
 export default class Registration extends React.Component {
   constructor(props: any) {
@@ -14,8 +15,9 @@ export default class Registration extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
-        {/* Logo Avatar here */}
+      <Styled.Background>
+        <div></div>
+
         <form onSubmit={this.handleSubmit}>
           <label>Email</label>
           <input type="text" />
@@ -23,41 +25,50 @@ export default class Registration extends React.Component {
           <label>Password</label>
           <input type="text" />
 
-          <select id="status" name="status">
-            <option value="online">Online</option>
-            <option value="offline">Offline</option>
-            <option value="dnd">Do not disturb</option>
-          </select>
+          <span>
+            <label>Status</label>
+            <select id="status" name="status">
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+              <option value="dnd">Do not disturb</option>
+            </select>
+          </span>
 
-          <input
-            type="checkbox"
-            id="remember"
-            name="remember"
-            value="remember"
-          />
-          <label htmlFor="remember">Remember me</label>
+          <span>
+            <input
+              type="checkbox"
+              id="remember"
+              name="remember"
+              value="remember"
+            />
+            <label htmlFor="remember">Remember me</label>
+          </span>
 
-          <input
-            type="checkbox"
-            id="password"
-            name="password"
-            value="password"
-          />
-          <label htmlFor="password">Remember my password</label>
+          <span>
+            <input
+              type="checkbox"
+              id="password"
+              name="password"
+              value="password"
+            />
+            <label htmlFor="password">Remember my password</label>
+          </span>
 
-          <input
-            type="checkbox"
-            id="automatic"
-            name="automatic"
-            value="automatic"
-          />
-          <label htmlFor="automatic">Sign me in automatically</label>
+          <span>
+            <input
+              type="checkbox"
+              id="automatic"
+              name="automatic"
+              value="automatic"
+            />
+            <label htmlFor="automatic">Sign me in automatically</label>
+          </span>
 
           <button type="submit" value="Submit">
-            Submit
+            Sign in
           </button>
         </form>
-      </React.Fragment>
+      </Styled.Background>
     );
   }
 }
