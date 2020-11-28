@@ -1,9 +1,9 @@
 import React from "react";
 import { Styled } from "./ContactGroup.styles";
-import { IMessageDTO } from "@shared/dto";
+import { MessageDTO } from "../../common/dto/message-dto";
 
 interface IContactGroupProps {
-  items: IMessageDTO[];
+  items: MessageDTO[];
   groupName: string;
 }
 export default class ContactGroup extends React.Component<IContactGroupProps> {
@@ -21,7 +21,7 @@ export default class ContactGroup extends React.Component<IContactGroupProps> {
 
         <Styled.ContactList>
           {this.props.items.map((item) => (
-            <li key={item.id}>{item.displayName}</li>
+            <li key={item.id}>displayname</li>
           ))}
         </Styled.ContactList>
       </React.Fragment>
