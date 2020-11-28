@@ -20,4 +20,8 @@ export class UserService {
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
+
+  async remove(id: any) {
+    return {};
+  }
 }
