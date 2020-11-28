@@ -1,4 +1,5 @@
 import React from 'react';
+import {Styled} from './ContactGroup.styles'
 
 interface Props {
     items: Array <{
@@ -25,13 +26,13 @@ export default class ContactGroup extends React.Component <Props> {
 
         return (
             <React.Fragment>
-                <h2>{this.props.groupName} (X/Y)</h2>
+                <Styled.ContactListTitle>{this.props.groupName} (X/Y)</Styled.ContactListTitle>
 
-                <ul>
+                <Styled.ContactList>
                     {this.props.items.map(item => (
-                        <li>{item.displayname}</li>
+                        <li key={item.id}>{item.displayname}</li>
                     ))}
-                </ul>
+                </Styled.ContactList>
             </React.Fragment>
         )
     }
