@@ -19,7 +19,6 @@ const ContactList = styled.ul`
 `;
 
 const Status = styled.div`
-
     height: 10px;
     width: 10px;
     background-color: #7baa7b;

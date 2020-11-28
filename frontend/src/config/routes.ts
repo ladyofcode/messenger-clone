@@ -1,4 +1,5 @@
 import * as Pages from "../pages";
+import ChatWindow from "../layouts/ChatWindow/ChatWindow";
 
 export interface IRoute {
   name: string;
@@ -19,6 +20,12 @@ const routes: IRoute[] = [
     path: "/register",
     exact: true,
     component: Pages.Registration,
+  },
+  {
+    name: "window",
+    path: "/window",
+    exact: true,
+    component: ChatWindow,
   },
 ];
 

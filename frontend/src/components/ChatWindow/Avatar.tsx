@@ -1,9 +1,11 @@
-export function Avatar(props) {
+import { Styled } from "./Avatar.styles";
+
+export function Avatar(props: any) {
   return (
-    <div className="avatarBox">
+    <Styled.AvatarBox>
       <img className="avatar"></img>
       <div className="downArrow"></div>
       <div className="sideArrow"></div>
-    </div>
+    </Styled.AvatarBox>
   );
 }
