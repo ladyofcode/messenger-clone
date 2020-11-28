@@ -4,14 +4,13 @@ import {
   UseGuards,
   Post,
   Req,
-  Res,
-  HttpException,
   BadRequestException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from 'src/user/user.service';
-import { Response, Request } from 'express';
 import { RegisterDTO } from '@shared/dto';
+import { CurrentUser } from './user.decorator';
+import { User } from 'src/entities/user.entity';
 
 @Controller('auth')
 export class AuthenticationController {
@@ -19,16 +18,18 @@ export class AuthenticationController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Req() req: Request) {
-    req.session['userId'] = req.user['id'];
+  async login(@CurrentUser() user: User, @Req() req: any) {
+    req.session['userId'] = user.id;
     req.session.save();
 
     return { user: req.user };
   }
 
   @Post('logout')
-  async logout(@Req() req: Request) {
-    req.session.destroy(() => {});
+  async logout(@Req() req: any) {
+    req.session.destroy(() => {
+      //
+    });
     req.logout();
   }
 
