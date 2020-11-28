@@ -1,16 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useInput } from "../../../hooks/useInput";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { Styled } from "../Auth.styles";
 
 interface ILoginProps {}
 
+export interface IInputValues {
+  email: string;
+  password: string;
+}
+
+const initialValue: IInputValues = {
+  email: "",
+  password: "",
+};
+
 const Login: React.FC<ILoginProps> = () => {
+  const { inputProps, values, isEmpty } = useInput<IInputValues>(initialValue);
   const { loginAccount } = useAuth();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    loginAccount({});
+
+    if (isEmpty()) return;
+
+    loginAccount(values);
   };
 
   return (
@@ -20,10 +35,15 @@ const Login: React.FC<ILoginProps> = () => {
 
       <form onSubmit={handleSubmit}>
         <label>Email</label>
-        <input type="text" />
+        <input type="email" name="email" {...inputProps("email")} required />
 
         <label>Password</label>
-        <input type="password" />
+        <input
+          type="password"
+          name="password"
+          {...inputProps("password")}
+          required
+        />
 
         <span>
           <label>Status</label>

@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
+import { UserDTO } from "../../common/dto/user-dto";
 import { authApi } from "../../api/Auth.api";
 import { LoginDTO, RegisterDTO } from "../../common/dto/auth-dto";
 
@@ -18,16 +19,27 @@ export const useAuth = () => {
 };
 
 const useAuthProvider = () => {
-  const [user] = useState(null);
+  const [user, setUser] = useState<UserDTO | null>(null);
 
   const registerAccount = async (payload: RegisterDTO) => {
-    const response = await authApi.register(payload);
-    console.log(response);
+    const { data, error } = await authApi.register(payload);
+
+    if (error) {
+      console.log("Could not register account ", error);
+      return;
+    }
+
+    setUser(data);
   };
 
   const loginAccount = async (payload: LoginDTO) => {
     const response = await authApi.login(payload);
     console.log(response);
+  };
+
+  const fetchUserData = async () => {
+    const userData = await authApi.me();
+    console.log(userData);
   };
 
   const isAuthenticated = useCallback(() => !!user, [user]);

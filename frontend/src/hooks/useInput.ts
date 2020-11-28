@@ -26,6 +26,7 @@ function useInput<T>(initialValue: T) {
   return {
     values,
     inputProps,
+    isEmpty: () => Object.values(values).some((v) => v === "" && v.length <= 0),
   };
 }
 

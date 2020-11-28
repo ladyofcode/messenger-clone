@@ -5,7 +5,7 @@ import { useInput } from "../../../hooks/useInput";
 import { Styled } from "../Auth.styles";
 
 interface IRegistrationProps {}
-interface IInputValues {
+export interface IInputValues {
   firstName: string;
   lastName: string;
   email: string;
@@ -41,7 +41,7 @@ const Registration: React.FC<IRegistrationProps> = () => {
         <input name="lastName" type="text" {...inputProps("lastName")} />
 
         <label>Email</label>
-        <input name="email" type="text" {...inputProps("email")} />
+        <input name="email" type="email" {...inputProps("email")} />
 
         <label>Password</label>
         <input name="password" type="password" {...inputProps("password")} />
