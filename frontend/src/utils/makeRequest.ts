@@ -6,6 +6,8 @@ interface IResponse<T> {
   data: T | null;
 }
 
+const BASE_URI = "http://localhost:5000";
+
 async function makeRequest<T>(
   endpoint: string,
   options: RequestInit = requestOptions,
@@ -17,7 +19,7 @@ async function makeRequest<T>(
 
   const mergedOptions = _.merge(requestOptions, options);
   try {
-    const response = await fetch(endpoint, mergedOptions);
+    const response = await fetch(BASE_URI + endpoint, mergedOptions);
 
     const contentType = response.headers.get("content-type");
 
