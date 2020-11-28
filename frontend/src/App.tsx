@@ -9,7 +9,7 @@ function App() {
       <Router>
         <Switch>
           {routes.map((route: IRoute) => (
-            <Route {...route} />
+            <Route {...route} key={route.name} />
           ))}
         </Switch>
       </Router>
