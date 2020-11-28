@@ -6,7 +6,6 @@ import {
   Param,
   Post,
   Put,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';

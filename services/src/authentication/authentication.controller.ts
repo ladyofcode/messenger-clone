@@ -4,13 +4,10 @@ import {
   UseGuards,
   Post,
   Req,
-  Res,
-  HttpException,
   BadRequestException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from 'src/user/user.service';
-import { Response, Request } from 'express';
 import { RegisterDTO } from '@shared/dto';
 
 @Controller('auth')
