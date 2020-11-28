@@ -18,6 +18,8 @@ export interface UserDTO {
   id: number;
   firstName: string;
   lastName: string;
+  status: 'online' | 'offline' | 'away';
+  statusMessage: string | null;
   email: string;
   username: string;
   createdAt: string;
@@ -30,4 +32,5 @@ export interface UpdateUserDTO {
   email?: string;
   password?: string;
   username?: string;
+  status?: string;
 }

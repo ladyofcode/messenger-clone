@@ -17,6 +17,12 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ default: 'offline' })
+  status: 'offline' | 'online' | 'away';
+
+  @Column({ nullable: true, default: null })
+  statusMessage: string;
+
   @Column()
   firstName: string;
 
