@@ -1,7 +1,6 @@
-
 export interface IMessageDTO {
-
-    message: string
-    timestamp:number
-    
-} 
+  id: number;
+  message: string;
+  displayName: string;
+  createdAt: string;
+}
