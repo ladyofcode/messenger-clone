@@ -11,4 +11,8 @@ export class UserService {
   async getAll() {
     return;
   }
+
+  async getOne(id: any) {
+    return {};
+  }
 }
