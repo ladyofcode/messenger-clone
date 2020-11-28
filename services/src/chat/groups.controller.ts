@@ -12,6 +12,7 @@ import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';
+import { UserPipe } from 'src/user.pipe';
 import { GroupsService } from './groups.service';
 
 @UseGuards(SessionGuard)
@@ -27,6 +28,14 @@ export class GroupsController {
   @Post()
   async create(@Body() { name }: CreateGroupDTO) {
     return this.groupsService.create(name);
+  }
+
+  @Get('contacts/:id')
+  groupForContactUser(
+    @CurrentUser() currentUser: User,
+    @Param('id', UserPipe) contactUser: User,
+  ) {
+    return this.groupsService.groupForContactUser(currentUser, contactUser);
   }
 
   @Post(':groupId/users')
