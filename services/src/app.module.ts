@@ -6,11 +6,17 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MessagesModule } from './chat/chat.module';
+import { User } from './entities/user.entity';
+import { Message } from './entities/message.entity';
+import { Contact } from './entities/contact.entity';
+import { Group } from './entities/group.entity';
+import { ContactsModule } from './contacts/contacts.module';
 @Module({
   imports: [
     AuthenticationModule,
     UserModule,
     MessagesModule,
+    ContactsModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -19,7 +25,7 @@ import { MessagesModule } from './chat/chat.module';
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
-      entities: [],
+      entities: [User, Message, Contact, Group],
       synchronize: true,
     }),
   ],

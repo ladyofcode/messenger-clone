@@ -1,3 +1,4 @@
+import { UserDTO } from "./user-dto";
 
 export const AuthResource = {
   login: {
@@ -21,7 +22,9 @@ type Resource<T> = {[key: T]: Endpoint}
 type Endpoint<P = any, B = any> = {method: string, path: (data?: P) => string, body?: (data: B) => B};
 */
 
-
+export interface LoginResponseDTO {
+  user: UserDTO;
+}
 
 export interface LoginDTO {
   email: string;

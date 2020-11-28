@@ -1,12 +1,23 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { User } from './user.entity';
 
-@Entity()
+@Entity({ name: 'groups' })
 export class Group {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
+
+  @ManyToMany(() => User, (user) => user.groups)
+  @JoinTable()
+  users: User[];
 
   @Column('timestamp')
   updatedAt: any;

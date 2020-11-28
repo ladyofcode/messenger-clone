@@ -1,18 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from 'src/entities/message.entity';
-import { User } from 'src/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessagesService {
-  async listAll(user: User): Promise<Message[]> {
-    return [];
+  constructor(
+    @InjectRepository(Message) private messageRepository: Repository<Message>,
+  ) {}
+
+  async listAll(groupId: number): Promise<Message[]> {
+    return this.messageRepository.find({
+      relations: ['group', 'sender'],
+      where: {
+        group: {
+          id: groupId,
+        },
+      },
+    });
   }
 
-  async create(user: User, groupId: number, message: string): Promise<Message> {
-    return null;
+  async create(groupId: number, message: string): Promise<Message> {
+    return this.messageRepository.create({
+      group: { id: groupId },
+      // TODO: get sender from the authenticated user object
+      sender: { id: 1 },
+      content: message,
+    });
   }
 
   async remove(messageId: number) {
-    return null;
+    const entity = await this.messageRepository.findOne(messageId);
+    return this.messageRepository.remove(entity);
   }
 }
