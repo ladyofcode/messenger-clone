@@ -15,4 +15,8 @@ export class UserService {
   async getOne(id: any) {
     return {};
   }
+
+  async remove(id: any) {
+    return {};
+  }
 }
