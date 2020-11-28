@@ -5,3 +5,8 @@ export interface IMessageDTO {
     timestamp:number
     
 } 
+
+export interface CreateMessageDTO {
+    groupId: number;
+    message: string;
+}
