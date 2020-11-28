@@ -22,9 +22,11 @@ export class GroupsService {
   }
 
   async create(name: string): Promise<Group> {
-    return this.groupRepository.create({
+    const group = this.groupRepository.create({
       name,
     });
+    this.groupRepository.save(group);
+    return group;
   }
 
   async update(groupId: number, newName: string): Promise<Group> {

@@ -6,7 +6,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ContactsService {
-  constructor(@InjectRepository(Contact) private contactRepository: Repository<Contact>) {}
+  constructor(
+    @InjectRepository(Contact) private contactRepository: Repository<Contact>,
+  ) {}
 
   async listFor(userId: number): Promise<User[]> {
     const contacts = await getConnection()
@@ -24,10 +26,11 @@ export class ContactsService {
   }
 
   async create(userId: number, otherUserId: number): Promise<Contact> {
-    return this.contactRepository.create({
+    const contact = this.contactRepository.create({
       user1: { id: userId },
       user2: { id: otherUserId },
     });
+    return this.contactRepository.save(contact);
   }
 
   async remove(userId: number, otherUserId: number): Promise<Contact> {
