@@ -1,39 +1,30 @@
-import React from 'react';
-import {Styled} from './ContactGroup.styles'
+import React from "react";
+import { Styled } from "./ContactGroup.styles";
+import { IMessageDTO } from "@shared/dto";
 
-interface Props {
-    items: Array <{
-        id: number,
-        displayname: string
-    }>,
-    groupName: string
+interface IContactGroupProps {
+  items: IMessageDTO[];
+  groupName: string;
 }
+export default class ContactGroup extends React.Component<IContactGroupProps> {
+  static defaultProps = {
+    items: [],
+    groupName: "No group name",
+  };
 
-export default class ContactGroup extends React.Component <Props> {
+  render() {
+    return (
+      <React.Fragment>
+        <Styled.ContactListTitle>
+          {this.props.groupName} (X/Y)
+        </Styled.ContactListTitle>
 
-    static defaultProps = {
-        items: [],
-        groupName: 'No group name'
-    }
-
-    constructor(props: any){
-        super(props)
-    }
-
-    render() {
-
-        // console.log(this.props)
-
-        return (
-            <React.Fragment>
-                <Styled.ContactListTitle>{this.props.groupName} (X/Y)</Styled.ContactListTitle>
-
-                <Styled.ContactList>
-                    {this.props.items.map(item => (
-                        <li key={item.id}>{item.displayname}</li>
-                    ))}
-                </Styled.ContactList>
-            </React.Fragment>
-        )
-    }
+        <Styled.ContactList>
+          {this.props.items.map((item) => (
+            <li key={item.id}>{item.displayName}</li>
+          ))}
+        </Styled.ContactList>
+      </React.Fragment>
+    );
+  }
 }
