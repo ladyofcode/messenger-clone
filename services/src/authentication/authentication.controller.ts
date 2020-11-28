@@ -19,7 +19,7 @@ export class AuthenticationController {
 
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  async login(@Req() req: Request) {
+  async login(@Req() req: any) {
     req.session['userId'] = req.user['id'];
     req.session.save();
 
@@ -27,8 +27,10 @@ export class AuthenticationController {
   }
 
   @Post('logout')
-  async logout(@Req() req: Request) {
-    req.session.destroy(() => {});
+  async logout(@Req() req: any) {
+    req.session.destroy(() => {
+      //
+    });
     req.logout();
   }
 
