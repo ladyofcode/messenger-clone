@@ -36,7 +36,7 @@ export class UserService {
       statusMessage: string | null;
     }>,
   ) {
-    return this.usersRepository.update({ id },updates);
+    return this.usersRepository.update({ id }, updates);
   }
 
   async create(
@@ -48,7 +48,6 @@ export class UserService {
       username: string;
     }>,
   ) {
-    
     const user = this.usersRepository.create(create);
     return this.usersRepository.save(user);
   }
