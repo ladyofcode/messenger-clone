@@ -5,12 +5,17 @@ import {
   Get,
   Param,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDTO } from '@shared/dto/message-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
-@UseGuards(SessionGuard)
+import { User } from 'src/entities/user.entity';
+import { CurrentUser } from 'src/authentication/user.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+// @UseGuards(SessionGuard)
 @Controller('groups/:groupId/messages')
 export class MessagesController {
   constructor(private messagesService: MessagesService) {}
@@ -20,9 +25,18 @@ export class MessagesController {
     return this.messagesService.listAll(groupId);
   }
 
+  // @Post('file')
+  // @UseInterceptors(FileInterceptor('file', { dest: '/uploads' }))
+  // uploadFile(@UploadedFile() file) {
+  //   console.log(file.upload, file.save, file.store);
+  // }
+
   @Post()
-  async create(@Body() { groupId, message }: CreateMessageDTO) {
-    return this.messagesService.create(groupId, message);
+  async create(
+    @Body() { groupId, message }: CreateMessageDTO,
+    @CurrentUser() user: User,
+  ) {
+    return this.messagesService.create(user.id, groupId, message);
   }
 
   @Delete(':id')

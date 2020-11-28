@@ -10,7 +10,7 @@ import {
 import { Server } from 'socket.io';
 import { EventService } from './event.service';
 
-@WebSocketGateway(Number(process.env.WEBSOCKET_PORT), {
+@WebSocketGateway(30001, {
   transports: ['websocket'],
 })
 export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
