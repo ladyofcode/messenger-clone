@@ -1,6 +1,6 @@
-import { User } from '@models';
 import { Injectable } from '@nestjs/common';
-import { Message } from 'src/models/message.model';
+import { Message } from 'src/entities/message.entity';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class MessagesService {

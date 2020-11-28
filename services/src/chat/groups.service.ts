@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 import { Injectable } from '@nestjs/common';
-import { Group } from 'src/models/group.model';
+import { Group } from 'src/entities/group.entity';
 
 @Injectable()
 export class GroupsService {

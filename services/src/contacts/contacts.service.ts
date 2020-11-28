@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { User } from 'src/entities/user.entity';
 import { Contact } from 'src/entities/contact.entity';
 
