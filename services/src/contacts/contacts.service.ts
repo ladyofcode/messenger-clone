@@ -2,10 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
 import { Contact } from 'src/entities/contact.entity';
 import { getConnection, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ContactsService {
-  constructor(private contactRepository: Repository<Contact>) {}
+  constructor(@InjectRepository(Contact) private contactRepository: Repository<Contact>) {}
 
   async listFor(userId: number): Promise<User[]> {
     const contacts = await getConnection()
