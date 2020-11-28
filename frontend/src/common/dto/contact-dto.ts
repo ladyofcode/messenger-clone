@@ -1,23 +1,23 @@
-import { UserDTO } from "./user-dto";
+import { UserDTO } from "./user-dto"
 
 export const groupResource = {
   allMine: {
     method: "GET",
-    path: () => `/contacts`,
+    path: () => `/contacts`
   },
-  create: {
+  create: { 
     method: "POST",
     path: () => `/contacts`,
-    body: (data: CreateContactDTO) => data,
+    body: (data: CreateContactDTO) => data
   },
-  delete: {
+  delete: { 
     method: "DELETE",
     path: (userId: number) => `/contacts/${userId}`,
-  },
-};
+  }
+} 
 
 export type ContactDTO = UserDTO[];
 
 export interface CreateContactDTO {
-  userId: number;
+  email: string;
 }
