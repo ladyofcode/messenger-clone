@@ -29,6 +29,16 @@ export class GroupsService {
     return group;
   }
 
+  async addUser(groupId: number, user: User) {
+    const group = await this.groupRepository.findOneOrFail({
+      relations: ['users'],
+      where: { id: groupId },
+    });
+    group.users.push(user);
+    this.groupRepository.save(group);
+    return group;
+  }
+
   async update(groupId: number, newName: string): Promise<Group> {
     const group = await this.groupRepository.findOne(groupId);
     group.name = newName;

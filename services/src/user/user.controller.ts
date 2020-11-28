@@ -10,6 +10,8 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDTO } from '@shared/dto/user-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
+import { CurrentUser } from 'src/authentication/user.decorator';
+import { User } from 'src/entities/user.entity';
 
 @UseGuards(SessionGuard)
 @Controller('users')
@@ -17,8 +19,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async currentUser(@Req() req) {
-    return req['user'];
+  async currentUser(@CurrentUser() user: User) {
+    return user;
   }
 
   @Get(':id')
