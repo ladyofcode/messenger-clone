@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "preserveSymlinks": true,
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["node_modules/common/src/*"]
+    }
+  }
+}
