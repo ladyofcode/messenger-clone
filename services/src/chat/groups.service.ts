@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User } from '../entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { Group } from 'src/models/group.model';
 
