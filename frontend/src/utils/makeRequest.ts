@@ -6,7 +6,7 @@ interface IResponse<T> {
   data: T | null;
 }
 
-const BASE_URI = "http://localhost:5000";
+const BASE_URI = "http://localhost:4000";
 
 async function makeRequest<T>(
   endpoint: string,
@@ -23,8 +23,9 @@ async function makeRequest<T>(
 
     const contentType = response.headers.get("content-type");
 
-    if (contentType && contentType.includes("application.json")) {
-      _response.data = await response.json();
+    if (contentType && contentType.includes("application/json")) {
+      const data = await response.json();
+      _response.data = data;
     }
   } catch (err) {
     _response.data = null;
