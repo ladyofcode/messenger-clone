@@ -47,7 +47,7 @@ export class UserService {
     }>,
   ) {
     console.log(create);
-    
+
     const user = this.usersRepository.create(create);
     return this.usersRepository.save(user);
   }
