@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserStatus } from '@shared/dto/user-dto';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 
@@ -31,10 +32,11 @@ export class UserService {
       email: string;
       password: string;
       username: string;
-      status: string;
+      status: UserStatus;
+      statusMessage: string | null;
     }>,
   ) {
-    return this.usersRepository.update({ id }, updates);
+    return this.usersRepository.update({ id },updates);
   }
 
   async create(
@@ -46,7 +48,6 @@ export class UserService {
       username: string;
     }>,
   ) {
-    console.log(create);
     
     const user = this.usersRepository.create(create);
     return this.usersRepository.save(user);
