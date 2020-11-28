@@ -1,8 +1,18 @@
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UserDTO } from "../../common/dto/user-dto";
 import { authApi } from "../../api/Auth.api";
 import { LoginDTO, RegisterDTO } from "../../common/dto/auth-dto";
 
-const userContext = createContext({} as any);
+interface IUserContext {
+  user: UserDTO;
+  registerAccount: (payload: RegisterDTO) => void;
+  loginAccount: (payload: LoginDTO) => void;
+  fetchUserData: () => void;
+  isAuthenticated: boolean;
+  loading: boolean;
+}
+
+const userContext = createContext<IUserContext | null>(null);
 
 interface IUserProviderProps {
   children: JSX.Element;
@@ -13,11 +23,13 @@ export const AuthProvider = ({ children }: IUserProviderProps) => {
   return <userContext.Provider value={user}>{children}</userContext.Provider>;
 };
 
-export const useAuth = () => {
-  return useContext(userContext);
+// Better way (c) ian
+export const useAuth = (): IUserContext => {
+  return useContext(userContext) as IUserContext;
 };
 
 const useAuthProvider = () => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   const registerAccount = async (payload: RegisterDTO) => {
@@ -30,27 +42,39 @@ const useAuthProvider = () => {
   };
 
   const loginAccount = async (payload: LoginDTO) => {
+    setLoading(true);
+
     const { error, data } = await authApi.login(payload);
+
     if (error) {
       console.error("Could not login");
       return;
     }
 
-    console.log(data);
     setUser(data!.user);
+    setLoading(false);
   };
 
   const fetchUserData = async () => {
     const userData = await authApi.me();
-    console.log(userData);
+    console.log({ userData });
   };
 
-  const isAuthenticated = useCallback(() => !!user, [user]);
+  useEffect(() => {
+    // auth/login
+    if (!user) {
+      fetchUserData();
+    }
+  }, [user]);
+
+  const isAuthenticated = !!user;
 
   return {
     user,
     registerAccount,
     loginAccount,
+    fetchUserData,
     isAuthenticated,
+    loading,
   };
 };

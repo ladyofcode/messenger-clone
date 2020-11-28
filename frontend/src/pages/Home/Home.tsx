@@ -21,7 +21,7 @@ const customGroupName = ["Some friends", "Online", "Offline"];
 const Home: React.FC = () => {
   const { user } = useAuth();
 
-  console.log(user);
+  console.log({ user });
 
   return (
     <React.Fragment>

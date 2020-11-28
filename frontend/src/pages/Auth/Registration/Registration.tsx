@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { useInput } from "../../../hooks/useInput";
 import { Styled } from "../Auth.styles";
@@ -22,11 +22,16 @@ const initialValue: IInputValues = {
 const Registration: React.FC<IRegistrationProps> = () => {
   const { registerAccount } = useAuth();
   const { inputProps, values } = useInput<IInputValues>(initialValue);
+  const { loading, isAuthenticated } = useAuth();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     registerAccount(values);
   };
+
+  if (!loading && isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Styled.Background>
