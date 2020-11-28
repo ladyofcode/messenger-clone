@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -19,9 +21,16 @@ export class Group {
   @JoinTable()
   users: User[];
 
-  @Column('timestamp')
-  updatedAt: any;
-
-  @Column('timestamp')
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   createdAt: any;
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updatedAt: Date;
 }

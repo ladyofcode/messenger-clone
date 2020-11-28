@@ -14,10 +14,14 @@ export const UserResource = {
   }
 } 
 
+export type UserStatus = 'online' | 'offline' | 'away';
+
 export interface UserDTO {
   id: number;
   firstName: string;
   lastName: string;
+  status: UserStatus;
+  statusMessage: string | null;
   email: string;
   username: string;
   createdAt: string;
@@ -30,4 +34,8 @@ export interface UpdateUserDTO {
   email?: string;
   password?: string;
   username?: string;
+  status?: UserStatus;
+  statusMessage?: string | null;
 }
+
+

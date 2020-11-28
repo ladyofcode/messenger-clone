@@ -1,3 +1,4 @@
+import { EventModule } from './events/event.module';
 import { UserModule } from './user/user.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { Module } from '@nestjs/common';
@@ -11,8 +12,10 @@ import { Message } from './entities/message.entity';
 import { Contact } from './entities/contact.entity';
 import { Group } from './entities/group.entity';
 import { ContactsModule } from './contacts/contacts.module';
+
 @Module({
   imports: [
+    EventModule,
     AuthenticationModule,
     UserModule,
     MessagesModule,

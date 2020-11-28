@@ -20,13 +20,17 @@ export class MessagesService {
     });
   }
 
-  async create(groupId: number, message: string): Promise<Message> {
-    return this.messageRepository.create({
+  async create(
+    userId: number,
+    groupId: number,
+    content: string,
+  ): Promise<Message> {
+    const msg = this.messageRepository.create({
       group: { id: groupId },
-      // TODO: get sender from the authenticated user object
-      sender: { id: 1 },
-      content: message,
+      sender: { id: userId },
+      content,
     });
+    return await this.messageRepository.save(msg);
   }
 
   async remove(messageId: number) {

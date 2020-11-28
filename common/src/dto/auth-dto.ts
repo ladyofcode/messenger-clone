@@ -31,10 +31,17 @@ export interface LoginDTO {
   password: string;
 }
 
+export interface RegisterResponseDTO {
+  user: UserDTO;
+}
 
 export interface RegisterDTO {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+}
+
+export interface LogoutResponseDTO {
+  user: UserDTO;
 }

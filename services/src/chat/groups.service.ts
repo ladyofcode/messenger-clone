@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Group } from 'src/entities/group.entity';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 
@@ -22,9 +22,21 @@ export class GroupsService {
   }
 
   async create(name: string): Promise<Group> {
-    return this.groupRepository.create({
+    const group = this.groupRepository.create({
       name,
     });
+    this.groupRepository.save(group);
+    return group;
+  }
+
+  async addUser(groupId: number, user: User) {
+    const group = await this.groupRepository.findOneOrFail({
+      relations: ['users'],
+      where: { id: groupId },
+    });
+    group.users.push(user);
+    this.groupRepository.save(group);
+    return group;
   }
 
   async update(groupId: number, newName: string): Promise<Group> {
