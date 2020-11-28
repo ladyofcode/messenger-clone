@@ -33,8 +33,6 @@ const TopBar = styled.header`
         div {
             display: flex;
         }
-
-        
         
     }
 
@@ -59,7 +57,6 @@ const GroupsContainer = styled.div`
     padding: 20px 40px;
     background: rgb(252,252,252);
     height: 100%;
-   
 `;
 
 const AddContact = styled.div`
@@ -78,7 +75,6 @@ const AddContact = styled.div`
 
     }
 `;
-
 
 export const Styled = {
     TopBar,

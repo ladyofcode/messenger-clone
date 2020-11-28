@@ -14,6 +14,7 @@
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "@types/styled-components": "^5.1.4",
+    "a11y-react-emoji": "^1.1.2",
     "electron-devtools-installer": "^3.1.1",
     "electron-is-dev": "^1.2.0",
     "electron-reload": "^1.5.0",
