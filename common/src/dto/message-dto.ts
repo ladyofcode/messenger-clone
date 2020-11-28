@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 export const MessageResource = {
 	all: {
@@ -24,3 +25,11 @@ export interface CreateMessageDTO {
     groupId: number;
     message: string;
 }
+=======
+export interface IMessageDTO {
+  id: number;
+  message: string;
+  displayName: string;
+  createdAt: string;
+}
+>>>>>>> 245021f737870d8bcd17f9cea091d69bf79c0745
