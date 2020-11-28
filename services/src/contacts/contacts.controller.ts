@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User } from 'src/entities/user.entity';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UserPipe } from '../user/user.pipe';
 import { ContactsService } from './contacts.service';

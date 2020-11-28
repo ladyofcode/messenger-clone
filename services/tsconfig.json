@@ -12,7 +12,9 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@models":["./src/models"]
+      "@shared": [
+        "../common/src"
+      ]
     }
   }
 }

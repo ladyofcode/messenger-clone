@@ -13,7 +13,7 @@ export class UserPipe implements PipeTransform {
 
   async transform(value: any, metadata: ArgumentMetadata) {
     if (value == null) throw new BadRequestException();
-    const user = this.userService.getOne(value);
+    const user = this.userService.findOne(value);
     if (user == null) throw new NotFoundException();
     return user;
   }

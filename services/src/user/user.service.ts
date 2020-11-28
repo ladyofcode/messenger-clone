@@ -1,18 +1,23 @@
 import { Injectable } from '@nestjs/common';
-//@note: I get user model from @models by setting the path in the tsconfig.json "path" property.
-import { User } from '@models';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UserService {
-  //@Todo: fetch data from DB
+  constructor(
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
 
-  users: Array<User> = [];
-
-  async getAll() {
-    return;
+  findAll(): Promise<User[]> {
+    return this.usersRepository.find();
   }
 
-  async getOne(id: any) {
-    return {};
+  findOne(id: string): Promise<User> {
+    return this.usersRepository.findOne(id);
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.usersRepository.delete(id);
   }
 }
