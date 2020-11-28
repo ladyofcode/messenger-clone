@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { userApi } from "../../api/User.api";
+import { authApi } from "../../api/Auth.api";
 import { LoginDTO, RegisterDTO } from "../../common/dto/auth-dto";
 
 const userContext = createContext({} as any);
@@ -21,12 +21,12 @@ const useAuthProvider = () => {
   const [user] = useState(null);
 
   const registerAccount = async (payload: RegisterDTO) => {
-    const response = await userApi.register(payload);
+    const response = await authApi.register(payload);
     console.log(response);
   };
 
   const loginAccount = async (payload: LoginDTO) => {
-    const response = await userApi.login(payload);
+    const response = await authApi.login(payload);
     console.log(response);
   };
 

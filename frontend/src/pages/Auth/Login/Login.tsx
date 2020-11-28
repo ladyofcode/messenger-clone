@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../hooks/services/useAuth";
 import { Styled } from "../Auth.styles";
 
 interface ILoginProps {}
 
 const Login: React.FC<ILoginProps> = () => {
+  const { loginAccount } = useAuth();
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    loginAccount({});
   };
 
   return (
@@ -19,7 +23,7 @@ const Login: React.FC<ILoginProps> = () => {
         <input type="text" />
 
         <label>Password</label>
-        <input type="text" />
+        <input type="password" />
 
         <span>
           <label>Status</label>
