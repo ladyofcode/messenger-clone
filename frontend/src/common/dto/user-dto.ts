@@ -1,18 +1,18 @@
 export const UserResource = {
   currentUser: {
     method: "GET",
-    path: () => `/users/me`
+    path: () => `/users`,
   },
   single: {
     method: "GET",
-    path: (userId: number) => `/users/${userId}`
+    path: (userId: number) => `/users/${userId}`,
   },
   update: {
     method: "PATCH",
     path: (userId: number) => `/users/${userId}`,
-    body: (data: UpdateUserDTO) => data
-  }
-} 
+    body: (data: UpdateUserDTO) => data,
+  },
+};
 
 export interface UserDTO {
   id: number;

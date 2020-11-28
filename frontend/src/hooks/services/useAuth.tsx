@@ -56,8 +56,10 @@ const useAuthProvider = () => {
   };
 
   const fetchUserData = async () => {
+    setLoading(true);
     const userData = await authApi.me();
-    console.log({ userData });
+    setUser(userData);
+    setLoading(false);
   };
 
   useEffect(() => {
