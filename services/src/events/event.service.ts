@@ -65,6 +65,10 @@ export class EventService {
 
     this.addAuthedUser(key.user.id, socketId);
 
+    if (this.authenticatedUsers[key.user.id].socketIds.length === 1) {
+      this.setUserOnline(key.user.id);
+    }
+
     return key.user;
   }
 
@@ -90,9 +94,20 @@ export class EventService {
         return true;
       });
       if (found) {
+        if (au.socketIds.length === 0) {
+          this.setUserOffline(au.userId);
+        }
         return;
       }
     }
+  }
+
+  private setUserOffline(userId: number) {
+    this.userService.update(userId, { status: 'offline' });
+  }
+
+  private setUserOnline(userId: number) {
+    this.userService.update(userId, { status: 'online' });
   }
 
   private keyForToken(token: string) {

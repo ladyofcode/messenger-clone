@@ -72,3 +72,26 @@
  * 	console.log('shake that booty');
  * })
  */
+
+/**
+ * ----------------------
+ * - Status Change -
+ * ----------------------
+ * 
+ * - DESCRIPTION
+ * Whenever a contact changes their status. You'll get an event giving their new status & statusMessage
+ * 
+ * - SPECIFICS 
+ * Name: "status-change"
+ * Data: StatusChangeEventDTO
+ * 
+ * - USAGE
+ * io.on('status-change', (data: StatusChangeEventDTO => {
+ * 	console.log('Status changed!');
+ * })
+ */
+export interface StatusChangeEventDTO {
+  userId: number;
+  status: 'online' | 'offline';
+  statusMessage: string;
+}
