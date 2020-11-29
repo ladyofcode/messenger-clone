@@ -31,7 +31,7 @@ const Contact = ({ id, firstName, lastName, status }: UserDTO) => {
         width="15px" 
         fill={
           status === 'online' ? "#86CA63" 
-          : status === 'away' ? "#522c00"
+          : status === 'away' ? "#e2a440"
           : "#e75f5f"
         } 
       />

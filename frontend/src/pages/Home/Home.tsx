@@ -9,9 +9,8 @@ import { AddContactModal } from "../../components/";
 
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount, token, user } = useAuth();
+  const { logoutAccount, token, user, fullName } = useAuth();
   const [modalIsOpen, setIsOpen] = useState(false);
-  const avatarSeed = user!.firstName + user!.lastName;
 
   useEffect(() => {
     if (!token) return;
@@ -30,7 +29,7 @@ const Home: React.FC = () => {
     <Styled.HomeContainer>
       <AddContactModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
       <Styled.TopBar>
-        <Styled.Avatar src={`https://avatars.dicebear.com/api/bottts/${avatarSeed}.svg`} />
+        <Styled.Avatar src={`https://avatars.dicebear.com/api/bottts/${fullName}.svg`} />
         <div>
           <div>
             <h2>{user!.firstName} {user!.lastName}</h2>

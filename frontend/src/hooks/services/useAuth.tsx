@@ -13,6 +13,7 @@ interface IUserContext {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
+  fullName: string | null;
 }
 
 const userContext = createContext<IUserContext | null>(null);
@@ -97,6 +98,8 @@ const useAuthProvider = () => {
 
   const isAuthenticated = !!user;
 
+  const fullName = user ? user!.firstName + user!.lastName : null;
+
   return {
     user,
     registerAccount,
@@ -107,5 +110,6 @@ const useAuthProvider = () => {
     token,
     loading,
     error,
+    fullName,
   };
 };

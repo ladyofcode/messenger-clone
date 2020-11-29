@@ -11,6 +11,8 @@ const Container = styled.div`
     rgba(203, 218, 239, 1) 84%
   );
 
+  overflow: hidden;
+
   /* > div:last-of-type {
         min-width: 200px;
     } */
@@ -28,8 +30,10 @@ const Container = styled.div`
   }
 
   > div:nth-child(1) {
-    grid-area: 1 / 1 / 2 / 6;
+    grid-area: 1 / 1 / 2 / 3;
+    width: 100vw;    
   }
+  
   > div:nth-child(2) {
     grid-area: 2 / 1 / 3 / 2;
     justify-content: space-around;

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const HomeContainer = styled.div`
     background: rgb(252,252,252);
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
 `;
 
 const TopBar = styled.header`
