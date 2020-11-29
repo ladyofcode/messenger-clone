@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';
@@ -24,6 +32,7 @@ export class ContactsController {
     @Body('email') otherUserEmail: string,
   ) {
     const otherUser = await this.userService.findByEmail(otherUserEmail);
+    if (otherUser == null) throw new NotFoundException('user not found');
     return this.contactService.create(user.id, otherUser.id);
   }
 
