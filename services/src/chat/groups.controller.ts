@@ -13,13 +13,17 @@ import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';
+import { EventService } from 'src/events/event.service';
 import { UserPipe } from 'src/user/user.pipe';
 import { GroupsService } from './groups.service';
 
 @UseGuards(SessionGuard)
 @Controller('groups')
 export class GroupsController {
-  constructor(private groupsService: GroupsService) {}
+  constructor(
+    private groupsService: GroupsService,
+    private eventService: EventService,
+  ) {}
 
   @Get()
   async allForCurrentUser(@CurrentUser() currentUser: User) {
@@ -41,6 +45,31 @@ export class GroupsController {
     return this.groupsService.groupForContactUser(currentUser, contactUser);
   }
 
+  @Post('/:id/nudge')
+  async nudge(@CurrentUser() user: User, @Param('id') groupId: number) {
+    this.sendEventToGroup(groupId, 'nudge', { senderId: user.id }, user.id);
+  }
+
+  @Post('/:id/start-typing')
+  async startTyping(@CurrentUser() user: User, @Param('id') groupId: number) {
+    this.sendEventToGroup(
+      groupId,
+      'start-typing',
+      { senderId: user.id },
+      user.id,
+    );
+  }
+
+  @Post('/:id/stop-typing')
+  async stopTyping(@CurrentUser() user: User, @Param('id') groupId: number) {
+    this.sendEventToGroup(
+      groupId,
+      'stop-typing',
+      { senderId: user.id },
+      user.id,
+    );
+  }
+
   @Post(':groupId/users')
   async join(
     @Param('groupId') groupId: number,
@@ -57,5 +86,18 @@ export class GroupsController {
   @Delete(':id')
   async remove(@Param('id') groupId: number) {
     return this.groupsService.remove(groupId);
+  }
+
+  private async sendEventToGroup(
+    groupId: number,
+    name: string,
+    message: any,
+    senderId: number,
+  ) {
+    const usersInGroup = await this.groupsService.allUsersIn(groupId);
+    const userIds = usersInGroup
+      .map((u) => u.id)
+      .filter((uid) => uid !== senderId);
+    this.eventService.sendEventToUsersIfAvailable(userIds, name, message);
   }
 }
