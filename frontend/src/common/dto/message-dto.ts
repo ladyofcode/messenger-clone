@@ -1,4 +1,5 @@
 import { UserDTO } from "./user-dto";
+import { GroupDTO } from "./group-dto";
 
 export const MessageResource = {
   all: {
@@ -20,6 +21,7 @@ export const MessageResource = {
 export interface MessageDTO {
   id: number;
   sender: UserDTO;
+  group: GroupDTO;
   content: string;
   createdAt: string;
 }

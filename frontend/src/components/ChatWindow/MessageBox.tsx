@@ -10,7 +10,7 @@ export function MessageBox(props: any) {
     <Styled.MessageBox>
       <div className="header"></div>
       {messages.map((m: MessageDTO) => (
-        <Message {...m} name={m.sender.id} key={m.id} />
+        <Message {...m} key={m.id} />
       ))}
     </Styled.MessageBox>
   );

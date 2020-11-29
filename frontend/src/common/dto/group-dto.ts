@@ -46,3 +46,8 @@ export interface GroupResponseDTO {
   updatedAt: string;
   users: UserDTO[];
 }
+
+export interface GroupDTO {
+  id: number;
+  name: string;
+}
