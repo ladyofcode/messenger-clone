@@ -1,27 +1,13 @@
-import React, { useEffect } from "react";
-// import ContactGroup from "../../components/ContactGroup/ContactGroup";
+import React from "react";
 import { useAuth } from "../../hooks/services/useAuth";
 import { Styled } from "./Home.styles";
 import { Contacts } from "./components";
 import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
-import socket from "../../config/socket";
 
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount, token } = useAuth();
-
-  // useEffect(() => {
-  //   if (token) {
-  //     socket.emit("authenticate", { token }, (data: any) => {
-  //       console.log(data);
-  //     });
-  //   }
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [token]);
+  const { logoutAccount } = useAuth();
 
   if (contacts.loading) {
     return <Transition />;
