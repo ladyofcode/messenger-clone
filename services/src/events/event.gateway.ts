@@ -21,6 +21,7 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleConnection() {
     //
+    console.log('ian connected');
   }
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {

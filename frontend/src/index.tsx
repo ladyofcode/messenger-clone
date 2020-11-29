@@ -6,14 +6,19 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./config";
 import { AuthProvider } from "./hooks/services/useAuth";
+import { GroupProvider } from "./hooks/services/useGroup";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
+      {/* <SocketProvider> */}
       <AuthProvider>
-        <App />
+        <GroupProvider>
+          <App />
+        </GroupProvider>
       </AuthProvider>
+      {/* </SocketProvider> */}
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root"),

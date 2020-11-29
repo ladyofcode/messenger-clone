@@ -9,6 +9,7 @@ interface IUserContext {
   loginAccount: (payload: LoginDTO) => Promise<void>;
   logoutAccount: () => Promise<void>;
   fetchUserData: () => Promise<void>;
+  token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
@@ -33,6 +34,7 @@ export const useAuth = (): IUserContext => {
 const useAuthProvider = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<UserDTO | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState(null);
 
   const registerAccount = async (payload: RegisterDTO) => {
@@ -57,6 +59,7 @@ const useAuthProvider = () => {
     }
 
     setUser(data!.user);
+
     setLoading(false);
   };
 
@@ -73,6 +76,19 @@ const useAuthProvider = () => {
     setUser(null);
   };
 
+  const authenticateSocket = async () => {
+    const { error, data } = await authApi.authenticateSocket();
+
+    if (!error) {
+      setToken(data.token);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) return;
+    authenticateSocket();
+  }, [user]);
+
   useEffect(() => {
     if (!user) {
       fetchUserData();
@@ -88,6 +104,7 @@ const useAuthProvider = () => {
     logoutAccount,
     fetchUserData,
     isAuthenticated,
+    token,
     loading,
     error,
   };

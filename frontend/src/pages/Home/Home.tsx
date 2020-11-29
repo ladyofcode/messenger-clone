@@ -1,57 +1,33 @@
-import React from "react";
-// import ContactGroup from "../../components/ContactGroup/ContactGroup";
+import React, { useEffect } from "react";
 import { useAuth } from "../../hooks/services/useAuth";
-import { MessageDTO } from "../../common/dto/message-dto";
 import { Styled } from "./Home.styles";
 import { Contacts } from "./components";
 import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
+import { waitForConnection } from "../../config/socket";
+// import { constants } from "../../config/constants";
+// import socketIOClient from "socket.io-client";
 
-const list: MessageDTO[] = [
-  {
-    id: 1,
-    message: "I will destroy you, Aku. I swear it.",
-    createdAt: "19-02-2004",
-  },
-  {
-    id: 2,
-    message: "I love you too tabss <3",
-    createdAt: "23-02-2004",
-  },
-  {
-    id: 3,
-    message:
-      "I, Demongo, have come to collect the souls of the greatest warriors!",
-    createdAt: "19-02-2004",
-  },
-  {
-    id: 4,
-    message: "You look hideous.",
-    createdAt: "23-02-2004",
-  },
-  {
-    id: 5,
-    message: "woef",
-    createdAt: "19-02-2004",
-  },
-  {
-    id: 6,
-    message:
-      "What in sam hoot willy are you doing here?! You're a sight for these great big sore eyes! Ha!",
-    createdAt: "23-02-2004",
-  },
-  {
-    id: 7,
-    message: "Oh man. All this walking is hurting my neck.",
-    createdAt: "19-02-2004",
-  },
-];
+// const socket = socketIOClient("http://localhost:30001", {
+//   transports: ["websocket"],
+// });
 
-const customGroupName = ["Some friends", "Online", "Offline"];
+// socket.on("connection", (client: any) => {
+//   console.log("woef");
+// });
 
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount } = useAuth();
+  const { logoutAccount, token } = useAuth();
+
+  useEffect(() => {
+    if (!token) return;
+    waitForConnection().then((socket) => {
+      socket.emit("authenticate", { token }, (statusMessage: string) => {
+        console.log(statusMessage);
+      });
+    });
+  }, [token]);
 
   if (contacts.loading) {
     return <Transition />;
@@ -83,11 +59,7 @@ const Home: React.FC = () => {
 
       <Styled.GroupsContainer>
         <Contacts {...contacts} />
-        {/* <ContactGroup items={list} groupName={customGroupName[0]} />
-        <ContactGroup items={list} groupName={customGroupName[0]} />
-        <ContactGroup items={list} groupName={customGroupName[0]} />
-        <ContactGroup items={list} groupName={customGroupName[1]} />
-        <ContactGroup items={list} groupName={customGroupName[2]} /> */}
+
         <Styled.AddContact>
           <span>+</span> Add a contact
         </Styled.AddContact>
