@@ -7,19 +7,20 @@ export const MessageResource = {
   },
   create: {
     method: "POST",
-    path: () => `/messages`,
+    path: (groupId: number) => `/groups/${groupId}/messages`,
     body: (data: CreateMessageDTO) => data,
   },
   remove: {
     method: "DELETE",
-    path: (messageId: number) => `/messages/${messageId}`,
+    path: (groupId: number, messageId: number) =>
+      `/groups/${groupId}/messages/${messageId}`,
   },
 };
 
 export interface MessageDTO {
   id: number;
   sender: UserDTO;
-  message: string;
+  content: string;
   createdAt: string;
 }
 

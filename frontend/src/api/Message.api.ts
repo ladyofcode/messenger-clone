@@ -20,7 +20,7 @@ class MessageApi {
   static async sendMessage(payload: CreateMessageDTO) {
     const { method, path } = MessageResource.create;
 
-    const endpoint = path();
+    const endpoint = path(payload.groupId);
 
     return makeRequest<MessageDTO | null>(endpoint, {
       method,

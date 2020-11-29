@@ -1,15 +1,15 @@
+import { MessageDTO } from "../../common/dto";
 import { Styled } from "./Message.styles";
 
-export function Message(props: any) {
+export function Message({ content }: MessageDTO) {
   return (
     <Styled.ChatLine>
-      { props.name &&
+      {props.name && (
         <div>
-          <p>{ props.name } says:</p>
-          <p>{ props.text }</p>
-        </div>     
-      }
-        
-      </Styled.ChatLine>
+          <p>{props.name} says:</p>
+          <p>{props.text}</p>
+        </div>
+      )}
+    </Styled.ChatLine>
   );
 }
