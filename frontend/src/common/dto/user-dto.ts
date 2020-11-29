@@ -1,23 +1,27 @@
 export const UserResource = {
   currentUser: {
     method: "GET",
-    path: () => `/users/me`
+    path: () => `/users`,
   },
   single: {
     method: "GET",
-    path: (userId: number) => `/users/${userId}`
+    path: (userId: number) => `/users/${userId}`,
   },
   update: {
     method: "PATCH",
     path: (userId: number) => `/users/${userId}`,
-    body: (data: UpdateUserDTO) => data
-  }
-} 
+    body: (data: UpdateUserDTO) => data,
+  },
+};
+
+export type UserStatus = "online" | "offline" | "away";
 
 export interface UserDTO {
   id: number;
   firstName: string;
   lastName: string;
+  status: UserStatus;
+  statusMessage: string | null;
   email: string;
   username: string;
   createdAt: string;
@@ -30,4 +34,6 @@ export interface UpdateUserDTO {
   email?: string;
   password?: string;
   username?: string;
+  status?: UserStatus;
+  statusMessage?: string | null;
 }

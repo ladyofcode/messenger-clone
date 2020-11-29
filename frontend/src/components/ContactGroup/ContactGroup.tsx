@@ -21,7 +21,10 @@ export default class ContactGroup extends React.Component<IContactGroupProps> {
 
         <Styled.ContactList>
           {this.props.items.map((item) => (
-            <li key={item.id}>displayname</li>
+            <li key={item.id}>
+              <Styled.Status></Styled.Status>
+              Samurai Jack
+            </li>
           ))}
         </Styled.ContactList>
       </React.Fragment>
