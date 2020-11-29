@@ -7,10 +7,11 @@ import { AuthenticationService } from './authentication.service';
 import { User } from 'src/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from 'src/user/user.service';
+import { EventModule } from 'src/events/event.module';
 
 @Global()
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([User])],
+  imports: [EventModule, UserModule, TypeOrmModule.forFeature([User])],
   controllers: [AuthenticationController],
   providers: [LocalStrategy, AuthenticationService, SessionGuard, UserService],
   exports: [SessionGuard],
