@@ -5,15 +5,23 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./config";
+import { AuthProvider } from "./hooks/services/useAuth";
+import { GroupProvider } from "./hooks/services/useGroup";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <App />
+      {/* <SocketProvider> */}
+      <AuthProvider>
+        <GroupProvider>
+          <App />
+        </GroupProvider>
+      </AuthProvider>
+      {/* </SocketProvider> */}
     </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 // If you want to start measuring performance in your app, pass a function

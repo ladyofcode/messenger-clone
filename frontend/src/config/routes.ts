@@ -5,6 +5,7 @@ export interface IRoute {
   path: string;
   exact: boolean;
   component: any;
+  protected: boolean;
 }
 
 const routes: IRoute[] = [
@@ -13,12 +14,28 @@ const routes: IRoute[] = [
     path: "/",
     exact: true,
     component: Pages.Home,
+    protected: true,
   },
   {
     name: "register",
     path: "/register",
     exact: true,
     component: Pages.Registration,
+    protected: false,
+  },
+  {
+    name: "login",
+    path: "/login",
+    exact: true,
+    component: Pages.Login,
+    protected: false,
+  },
+  {
+    name: "chat",
+    path: "/chat/:id",
+    exact: true,
+    component: Pages.Chat,
+    protected: true,
   },
 ];
 

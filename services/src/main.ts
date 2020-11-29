@@ -7,6 +7,7 @@ import { EventAdapter } from './events/event.adapter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
+
   app.use(cookieParser());
   app.use(
     session({
@@ -24,6 +25,7 @@ async function bootstrap() {
     allowedHeaders:
       'Origin,X-Requested-With,Content-Type,Accept,Authorization,authorization,X-Forwarded-for',
   });
+
   app.useWebSocketAdapter(new EventAdapter());
 
   await app.listen(port);

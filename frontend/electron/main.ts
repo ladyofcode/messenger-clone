@@ -9,10 +9,13 @@ let win: BrowserWindow | null = null;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 600,
+    height: 800,
+    minWidth: 600,
+    minHeight: 800,
     webPreferences: {
-      nodeIntegration: true,
+      nativeWindowOpen: true,
+      contextIsolation: true,
     },
   });
 
@@ -35,7 +38,7 @@ function createWindow() {
         "..",
         "node_modules",
         ".bin",
-        "electron"
+        "electron",
       ),
       forceHardReset: true,
       hardResetMethod: "exit",
@@ -58,4 +61,23 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+
+  win!.webContents.on(
+    "new-window",
+    (event, url, frameName, disposition, options, additionalFeatures) => {
+      // This is the name we chose for our window. You can have multiple names for
+      // multiple windows and each have their options
+      if (frameName === "ChatBox") {
+        event.preventDefault();
+        Object.assign(options, {
+          // This will prevent interactions with the win
+          parent: win,
+          width: 400,
+          height: 150,
+          // You can also set `left` and `top` positions
+        });
+        event.newGuest = new BrowserWindow(options);
+      }
+    },
+  );
 });
