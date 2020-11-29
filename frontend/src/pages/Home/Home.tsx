@@ -1,40 +1,71 @@
-import React from 'react';
-import ContactGroup from '../../components/ContactGroup/ContactGroup'
+import React, { useEffect } from "react";
+import { useAuth } from "../../hooks/services/useAuth";
+import { Styled } from "./Home.styles";
+import { Contacts } from "./components";
+import { useContacts } from "../../hooks/useContacts";
+import { Transition } from "../../components";
+import { waitForConnection } from "../../config/socket";
+// import { constants } from "../../config/constants";
+// import socketIOClient from "socket.io-client";
 
-export default class Home extends React.Component {
-    
-    render(){
+// const socket = socketIOClient("http://localhost:30001", {
+//   transports: ["websocket"],
+// });
 
-        const list = [
-            {
-                id: 1,
-                displayname: 'That friend in the contact list'
-            },
-            {
-                id: 2,
-                displayname: 'LoNg NaMeS ArE StUpiD'
-            }
-        ]
+// socket.on("connection", (client: any) => {
+//   console.log("woef");
+// });
 
-        const customGroupName = ['Some friends', 'Online', 'Offline']
+const Home: React.FC = () => {
+  const contacts = useContacts();
+  const { logoutAccount, token } = useAuth();
 
-        return (
-            <React.Fragment>
-                /* Main menu*/
-                /* User details */
+  useEffect(() => {
+    if (!token) return;
+    waitForConnection().then((socket) => {
+      socket.emit("authenticate", { token }, (statusMessage: string) => {
+        console.log(statusMessage);
+      });
+    });
+  }, [token]);
 
-                /* Custom groups contacts */
-                <ContactGroup items={list} groupName={customGroupName[0]}/>
+  if (contacts.loading) {
+    return <Transition />;
+  }
 
-                /* Online contacts */
-                <ContactGroup items={list} groupName={customGroupName[1]}/>
+  return (
+    <React.Fragment>
+      <Styled.TopBar>
+        <div>Image</div>
+        <div>
+          <div>
+            <h2>SoWhale </h2>
+            <select id="status" name="status">
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+              <option value="dnd">Do not disturb</option>
+            </select>
+          </div>
+          <p>Donny says he's going insane - but he's already there</p>
+        </div>
+        {/* remove this whenever */}
+        <button
+          style={{ width: "100px", height: "50px" }}
+          onClick={() => logoutAccount()}
+        >
+          logout
+        </button>
+      </Styled.TopBar>
 
-                /* Offline contacts */
-                <ContactGroup items={list} groupName={customGroupName[2]}/>
+      <Styled.GroupsContainer>
+        <Contacts {...contacts} />
 
-                /* Add a contact */
-                
-            </React.Fragment>
-        )
-    }
-}
+        <Styled.AddContact>
+          <span>+</span> Add a contact
+        </Styled.AddContact>
+      </Styled.GroupsContainer>
+    </React.Fragment>
+  );
+};
+
+export default Home;
