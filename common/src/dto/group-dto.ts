@@ -3,6 +3,10 @@ export const groupResource = {
     method: "GET",
     path: () => `/groups`
   },
+  groupForContactUser: {
+    method: "GET",
+    path: (otherUserId: number) => `/groups/contacts/${otherUserId}`
+  },
   create: { 
     method: "POST",
     path: () => `/groups`,

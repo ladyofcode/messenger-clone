@@ -3,11 +3,11 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
   OnGatewayDisconnect,
   OnGatewayConnection,
+  ConnectedSocket,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { EventService } from './event.service';
 
 @WebSocketGateway(30001, {
@@ -27,12 +27,19 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
     //this.server.emit('users', 'ok')
   }
 
-  afterInit(server: Server) {
-    this.eventService.server = server;
+  @SubscribeMessage('authenticate')
+  async authenticateSocket(
+    @MessageBody() { token }: { token: string },
+    @ConnectedSocket() socket: Socket,
+  ) {
+    const user = await this.eventService.authenticateSocket(token, socket.id);
+    if (user == null) {
+      return { status: 'failed' };
+    }
+    return { status: 'success' };
   }
 
-  @SubscribeMessage('authentication')
-  authentication(@MessageBody() data: any): WsResponse<any> {
-    return { event: 'authentication', data: 'ok' };
+  afterInit(server: Server) {
+    this.eventService.server = server;
   }
 }

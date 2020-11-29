@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Group } from 'src/entities/group.entity';
-import { Repository } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 
@@ -19,6 +19,30 @@ export class GroupsService {
       },
     });
     return user.groups;
+  }
+
+  // async
+
+  async groupForContactUser(currentUser: User, contactUser: User) {
+    const groupsCurrentUser = await this.allFor(currentUser.id);
+    const existingGroup = groupsCurrentUser.find((group) => {
+      if (group.users.length !== 2) return;
+      for (const user of group.users) {
+        if (user.id !== currentUser.id && user.id !== contactUser.id)
+          return false;
+      }
+      return true;
+    });
+    if (existingGroup != null) return existingGroup;
+
+    // Otherwise create the group
+    const newGroup = await this.create(
+      `${currentUser.firstName} - ${contactUser.firstName}`,
+    );
+    await this.addUser(newGroup.id, currentUser);
+    await this.addUser(newGroup.id, contactUser);
+
+    return newGroup;
   }
 
   async create(name: string): Promise<Group> {
