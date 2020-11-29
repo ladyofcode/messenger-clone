@@ -8,6 +8,12 @@ import { GlobalStyles, theme } from "./config";
 import { AuthProvider } from "./hooks/services/useAuth";
 import { GroupProvider } from "./hooks/services/useGroup";
 
+// Temp work space
+import { WebRTC } from './api/webRTC';
+const webRTC = new WebRTC();
+console.log('webRTC:', webRTC)
+
+
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>

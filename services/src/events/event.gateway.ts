@@ -20,7 +20,6 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private eventService: EventService) {}
 
   async handleConnection() {
-    //
     console.log('ian connected');
   }
 
@@ -42,5 +41,25 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   afterInit(server: Server) {
     this.eventService.server = server;
+  }
+
+  /** WebRTC Signaling Server */
+
+  @SubscribeMessage('offer')
+  async rtcOffer(@MessageBody() data, @ConnectedSocket() socket: Socket) {
+    console.log('offer', data);
+
+    //Filtering target user here using groups id
+    this.server.emit('answer', data);
+  }
+
+  @SubscribeMessage('candidate')
+  async rtcIceCandidate(
+    @MessageBody() data,
+    @ConnectedSocket() socket: Socket,
+  ) {
+
+    //Filtering target user here using groups id
+    this.server.emit('candidate', data);
   }
 }
