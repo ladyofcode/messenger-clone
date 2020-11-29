@@ -2,25 +2,21 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
-import { Group } from './group.entity';
 import { User } from './user.entity';
 
-@Entity({ name: 'messages' })
-export class Message {
+@Entity({ name: 'gateway_keys' })
+export class GatewayKey {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Group)
-  group: Group;
-
-  @ManyToOne(() => User)
-  sender: User;
+  @ManyToOne(() => User, (user) => user.gatewayKeys)
+  user: User;
 
   @Column()
-  content: string;
+  token: string;
 
   @CreateDateColumn({
     type: 'timestamp',

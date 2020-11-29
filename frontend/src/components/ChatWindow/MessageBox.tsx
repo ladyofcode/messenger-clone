@@ -1,22 +1,29 @@
-import { Message } from './Message';
+import { useEffect } from "react";
+import { MessageDTO, UserDTO } from "../../common/dto";
+import { useGroup } from "../../hooks/services/useGroup";
+import socket from "../../config/socket";
+import { Message } from "./Message";
 import { Styled } from "./MessageBox.styles";
 
 export function MessageBox(props: any) {
+  const { group, messages, setMessages } = useGroup();
+
+  useEffect(() => {
+    socket.on("message", (data: MessageDTO) => {
+      setMessages((curr: MessageDTO[]) => {
+        const _user = group.users.find((u: UserDTO) => u.id === data.sender.id);
+        const newMessages = [...curr, { ...data, sender: _user }];
+        return newMessages;
+      });
+    });
+  }, [setMessages, group]);
+
   return (
     <Styled.MessageBox>
-      <div className="header"> {/* only contains the 'To:...' field */} </div>
-      {/* <div className="messages"> */}
-        {/* { props.messages.map( m => (<Message name={m.name} text={m.text} ></Message>)) } */}
-      {/* </div> */}
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" />
+      <div className="header"></div>
+      {messages.map((m: MessageDTO) => (
+        <Message {...m} key={m.id} />
+      ))}
     </Styled.MessageBox>
   );
 }

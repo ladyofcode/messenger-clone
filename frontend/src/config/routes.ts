@@ -30,6 +30,13 @@ const routes: IRoute[] = [
     component: Pages.Login,
     protected: false,
   },
+  {
+    name: "chat",
+    path: "/chat/:id",
+    exact: true,
+    component: Pages.Chat,
+    protected: true,
+  },
 ];
 
 export { routes };

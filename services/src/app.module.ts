@@ -12,6 +12,7 @@ import { Message } from './entities/message.entity';
 import { Contact } from './entities/contact.entity';
 import { Group } from './entities/group.entity';
 import { ContactsModule } from './contacts/contacts.module';
+import { GatewayKey } from './entities/gatewaykey.entity';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { ContactsModule } from './contacts/contacts.module';
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
-      entities: [User, Message, Contact, Group],
+      entities: [User, Message, Contact, Group, GatewayKey],
       synchronize: true,
     }),
   ],

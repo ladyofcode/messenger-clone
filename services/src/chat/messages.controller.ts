@@ -5,38 +5,50 @@ import {
   Get,
   Param,
   Post,
-  UploadedFile,
   UseGuards,
-  UseInterceptors,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDTO } from '@shared/dto/message-dto';
-import { SessionGuard } from 'src/authentication/session.guard';
 import { User } from 'src/entities/user.entity';
 import { CurrentUser } from 'src/authentication/user.decorator';
-import { FileInterceptor } from '@nestjs/platform-express';
-// @UseGuards(SessionGuard)
+import { EventService } from 'src/events/event.service';
+import { GroupsService } from './groups.service';
+import { SessionGuard } from 'src/authentication/session.guard';
+
 @Controller('groups/:groupId/messages')
+@UseGuards(SessionGuard)
 export class MessagesController {
-  constructor(private messagesService: MessagesService) {}
+  constructor(
+    private messagesService: MessagesService,
+    private eventService: EventService,
+    private groupService: GroupsService,
+  ) {}
 
   @Get()
   async all(@Param('groupId') groupId: number) {
     return this.messagesService.listAll(groupId);
   }
 
-  // @Post('file')
-  // @UseInterceptors(FileInterceptor('file', { dest: '/uploads' }))
-  // uploadFile(@UploadedFile() file) {
-  //   console.log(file.upload, file.save, file.store);
-  // }
-
   @Post()
   async create(
     @Body() { groupId, message }: CreateMessageDTO,
     @CurrentUser() user: User,
   ) {
-    return this.messagesService.create(user.id, groupId, message);
+    const createdMessage = await this.messagesService.create(
+      user.id,
+      groupId,
+      message,
+    );
+    const usersInGroup = await this.groupService.allUsersIn(groupId);
+    const userIds = usersInGroup
+      .map((u) => u.id)
+      .filter((uid) => uid !== user.id);
+    this.eventService.sendEventToUsersIfAvailable(
+      userIds,
+      'message',
+      createdMessage,
+    );
+    return createdMessage;
   }
 
   @Delete(':id')

@@ -9,7 +9,7 @@ function App() {
   useAuth();
 
   return (
-    <div className="App">
+    <div className="App" id="fancyIdForElectron">
       <Router>
         <Switch>
           {routes.map((route: IRoute) =>

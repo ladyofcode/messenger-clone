@@ -5,6 +5,7 @@ import {
   RegisterDTO,
 } from "../common/dto/auth-dto";
 import { UserDTO, UserResource } from "../common/dto/user-dto";
+import { clientEvents } from "../common/events/client-event";
 import { makeRequest } from "../utils/makeRequest";
 
 class AuthApi {
@@ -48,6 +49,18 @@ class AuthApi {
     return makeRequest<UserDTO | null>(endpoint, {
       method,
     });
+  }
+
+  static async authenticateSocket() {
+    //  * POST /events/create-token
+    return makeRequest<any>("/events/create-token", {
+      method: "POST",
+    });
+  }
+
+  static getAuthenticationEvent() {
+    const { name } = clientEvents.authenticate;
+    return name;
   }
 }
 

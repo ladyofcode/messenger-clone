@@ -20,6 +20,7 @@ export class ContactsService {
         'user.id = contact."user1Id" and contact."user2Id" = :userId or user.id = contact."user2Id" and contact."user1Id" = :userId',
         { userId },
       )
+      .where('user.id != :userId', { userId })
       .getMany();
 
     return contacts;

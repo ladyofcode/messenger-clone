@@ -1,12 +1,11 @@
 import _ from "lodash";
 import { requestOptions } from "../config";
+import { constants } from "../config/constants";
 
 interface IResponse<T> {
   error: any;
   data: T | null;
 }
-
-const BASE_URI = "http://localhost:4000";
 
 async function makeRequest<T>(
   endpoint: string,
@@ -18,8 +17,9 @@ async function makeRequest<T>(
   };
 
   const mergedOptions = _.merge({}, requestOptions, options);
+
   try {
-    const response = await fetch(BASE_URI + endpoint, mergedOptions);
+    const response = await fetch(constants.BASE_PATH + endpoint, mergedOptions);
 
     const contentType = response.headers.get("content-type");
 
