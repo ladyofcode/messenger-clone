@@ -50,7 +50,7 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
     console.log('offer', data);
 
     //Filtering target user here using groups id
-    this.server.emit('answer', data);
+    socket.broadcast.emit('answer', data);
   }
 
   @SubscribeMessage('candidate')
@@ -58,8 +58,7 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @MessageBody() data,
     @ConnectedSocket() socket: Socket,
   ) {
-
     //Filtering target user here using groups id
-    this.server.emit('candidate', data);
+    socket.broadcast.emit('candidate', data);
   }
 }

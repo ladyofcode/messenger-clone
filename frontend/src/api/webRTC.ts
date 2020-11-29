@@ -15,24 +15,49 @@ export class WebRTC {
     }
 
     async init(){
+
+        const localStream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+        localStream.getTracks().forEach(track => {
+            this.peerConnection.addTrack(track, localStream);
+        });
+
         this.io = await waitForConnection();
+        setTimeout(()=>{
+            this.setupWebRTC()
+        },1000)
+
+
     }
 
 
     setupWebRTC(){
-        this.peerConnection.onconnectionstatechange = (event) => {console.info(event)}
-        this.peerConnection.oniceconnectionstatechange = (event) => {console.info(event)}
-        this.peerConnection.onicegatheringstatechange = (event) => {console.info(event)}
+        this.peerConnection.onconnectionstatechange = (event) => {console.info('onconnectionstatechange', event)}
+        this.peerConnection.oniceconnectionstatechange = (event) => {console.info('oniceconnectionstatechange',event)}
+        this.peerConnection.onicegatheringstatechange = (event) => {console.info('onicegatheringstatechange',event)}
 
         this.peerConnection.ontrack = (e: RTCTrackEvent)=>{
             //Get the video stream in e.streams
             //Inject into video srcObject
+            console.log("ontrack");
+            console.log(e);
+            
+            const video = document.createElement('video')
+            video.srcObject = e.streams[0];
+            video.style.position = 'absolute';
+            video.style.top = "0";
+            video.style.left = "0";
+            video.controls = true;
+            video.autoplay = true;
+            document.body.append(video);
         }
 
         if(this.io){
 
             this.peerConnection.onicecandidate = (e: RTCPeerConnectionIceEvent)=>{
-                this.io?.send('candidate', e.candidate)
+                console.log('onicecandidate', e);
+                if(e.candidate){
+                    this.io?.emit('candidate', e.candidate)
+                }
             }
 
             this.io.on('answer',(data:any)=>{
@@ -42,8 +67,6 @@ export class WebRTC {
             this.io.on('candidate',(data:any)=>{
                 this.handleCandidate(data)
             })
-    
-            this.rtcOffer();
 
         }
     }
@@ -51,21 +74,30 @@ export class WebRTC {
     //outgoing
     async rtcOffer(){
         const offerDescription = await this.peerConnection.createOffer(this.sdpConstraints);
-        this.peerConnection.setLocalDescription(offerDescription);
-
-        this.io?.send('offer', offerDescription)
+        await this.peerConnection.setLocalDescription(offerDescription);
+        console.log('offer',offerDescription);
+        this.io?.emit('offer', offerDescription)
     }
 
     //incoming
-    async rtcAnswer(answer: any){
-        const answerDescription = new RTCSessionDescription(answer);
-        this.peerConnection.setRemoteDescription(answerDescription);
+    async rtcAnswer(offer: any){
+        console.log('answer', offer);
+        const offerDescription = new RTCSessionDescription(offer);
+        await this.peerConnection.setRemoteDescription(offerDescription);
+        const answerDescription = await this.peerConnection.createAnswer();
+        await this.peerConnection.setLocalDescription(answerDescription);
+        this.io?.emit('offer', answerDescription)
     }
 
     //incoming
     async handleCandidate(candidateMessage:any){
+        console.log('candidateMessage',candidateMessage);
         const candidate = new RTCIceCandidate(candidateMessage);
-        this.peerConnection.addIceCandidate(candidate);
+        try{
+            await this.peerConnection.addIceCandidate(candidate);
+        } catch(e){
+            return
+        }
     }
 
 
