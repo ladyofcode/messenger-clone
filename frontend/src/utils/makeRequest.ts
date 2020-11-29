@@ -17,7 +17,7 @@ async function makeRequest<T>(
     data: null,
   };
 
-  const mergedOptions = _.merge(requestOptions, options);
+  const mergedOptions = _.merge({}, requestOptions, options);
   try {
     const response = await fetch(BASE_URI + endpoint, mergedOptions);
 

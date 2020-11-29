@@ -31,7 +31,7 @@ export class ContactsController {
     @CurrentUser() user: User,
     @Body('email') otherUserEmail: string,
   ) {
-    const otherUser = await this.userService.findOneByEmail(otherUserEmail);
+    const otherUser = await this.userService.findByEmail(otherUserEmail);
     return this.contactService.create(user.id, otherUser.id);
   }
 

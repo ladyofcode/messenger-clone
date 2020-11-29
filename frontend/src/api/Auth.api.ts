@@ -1,4 +1,4 @@
-import { LoginDTO } from "./../../../common/src/dto/auth-dto";
+import { LoginDTO } from "../common/dto/auth-dto";
 import {
   AuthResource,
   LoginResponseDTO,

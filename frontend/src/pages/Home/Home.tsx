@@ -1,8 +1,11 @@
 import React from "react";
-import ContactGroup from "../../components/ContactGroup/ContactGroup";
+// import ContactGroup from "../../components/ContactGroup/ContactGroup";
 import { useAuth } from "../../hooks/services/useAuth";
 import { MessageDTO } from "../../common/dto/message-dto";
 import { Styled } from "./Home.styles";
+import { Contacts } from "./components";
+import { useContacts } from "../../hooks/useContacts";
+import { Transition } from "../../components";
 
 const list: MessageDTO[] = [
   {
@@ -47,7 +50,12 @@ const list: MessageDTO[] = [
 const customGroupName = ["Some friends", "Online", "Offline"];
 
 const Home: React.FC = () => {
+  const contacts = useContacts();
   const { logoutAccount } = useAuth();
+
+  if (contacts.loading) {
+    return <Transition />;
+  }
 
   return (
     <React.Fragment>
@@ -74,16 +82,12 @@ const Home: React.FC = () => {
       </Styled.TopBar>
 
       <Styled.GroupsContainer>
+        <Contacts {...contacts} />
+        {/* <ContactGroup items={list} groupName={customGroupName[0]} />
         <ContactGroup items={list} groupName={customGroupName[0]} />
-
         <ContactGroup items={list} groupName={customGroupName[0]} />
-
-        <ContactGroup items={list} groupName={customGroupName[0]} />
-
         <ContactGroup items={list} groupName={customGroupName[1]} />
-
-        <ContactGroup items={list} groupName={customGroupName[2]} />
-
+        <ContactGroup items={list} groupName={customGroupName[2]} /> */}
         <Styled.AddContact>
           <span>+</span> Add a contact
         </Styled.AddContact>
