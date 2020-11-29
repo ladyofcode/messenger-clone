@@ -1,29 +1,29 @@
 import { UserDTO } from "./user-dto";
 
 export const MessageResource = {
-	all: {
-		method: "GET",
-		path: (groupId: number) => `/groups/${groupId}/messages`
-	},
+  all: {
+    method: "GET",
+    path: (groupId: number) => `/groups/${groupId}/messages`,
+  },
   create: {
     method: "POST",
-    path: (groupId: number) => `/groups/${groupId}/messages`,
-    body: (data: CreateMessageDTO) => data
+    path: () => `/messages`,
+    body: (data: CreateMessageDTO) => data,
   },
-  remove: { 
+  remove: {
     method: "DELETE",
-    path: (groupId: number, messageId: number) => `/groups/${groupId}/messages/${messageId}`
-  }
-} 
+    path: (messageId: number) => `/messages/${messageId}`,
+  },
+};
 
 export interface MessageDTO {
-    id: number
-    sender: UserDTO;
-    message: string
-    createdAt:string
-} 
+  id: number;
+  sender: UserDTO;
+  message: string;
+  createdAt: string;
+}
 
 export interface CreateMessageDTO {
-    groupId: number;
-    message: string;
+  groupId: number;
+  message: string;
 }

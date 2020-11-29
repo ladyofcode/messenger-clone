@@ -24,6 +24,7 @@ class MessageApi {
 
     return makeRequest<MessageDTO | null>(endpoint, {
       method,
+      body: JSON.stringify(payload),
     });
   }
 
