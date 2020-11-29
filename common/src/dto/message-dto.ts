@@ -1,3 +1,4 @@
+import { GroupDTO } from "./group-dto";
 import { UserDTO } from "./user-dto";
 
 export const MessageResource = {
@@ -19,7 +20,8 @@ export const MessageResource = {
 export interface MessageDTO {
     id: number
     sender: UserDTO;
-    message: string
+    group: GroupDTO;
+    content: string
     createdAt:string
 } 
 

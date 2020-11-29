@@ -30,6 +30,11 @@ export const groupResource = {
   }
 } 
 
+export interface GroupDTO {
+  id: number;
+  name: string;
+}
+
 export interface CreateGroupDTO {
   name: string;
 }
