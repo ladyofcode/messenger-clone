@@ -7,7 +7,6 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./config";
 import { AuthProvider } from "./hooks/services/useAuth";
 import { GroupProvider } from "./hooks/services/useGroup";
-// import { SocketProvider } from "./hooks/services/useSocket";
 
 ReactDOM.render(
   <React.StrictMode>

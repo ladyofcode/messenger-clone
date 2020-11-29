@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../hooks/services/useAuth";
 import { Styled } from "./Home.styles";
 import { Contacts } from "./components";
 import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
+import { waitForConnection } from "../../config/socket";
+// import { constants } from "../../config/constants";
+// import socketIOClient from "socket.io-client";
+
+// const socket = socketIOClient("http://localhost:30001", {
+//   transports: ["websocket"],
+// });
+
+// socket.on("connection", (client: any) => {
+//   console.log("woef");
+// });
 
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount } = useAuth();
+  const { logoutAccount, token } = useAuth();
+
+  useEffect(() => {
+    if (!token) return;
+    waitForConnection().then((socket) => {
+      socket.emit("authenticate", { token }, (statusMessage: string) => {
+        console.log(statusMessage);
+      });
+    });
+  }, [token]);
 
   if (contacts.loading) {
     return <Transition />;

@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 import { EventService } from './event.service';
 
 @WebSocketGateway(30001, {
-  transports: ['websocket', 'polling'],
+  transports: ['websocket'],
 })
 export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
@@ -21,6 +21,7 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleConnection() {
     //
+    console.log('ian connected');
   }
 
   async handleDisconnect(@ConnectedSocket() socket: Socket) {

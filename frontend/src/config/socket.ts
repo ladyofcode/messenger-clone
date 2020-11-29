@@ -1,11 +1,19 @@
 import socketIOClient from "socket.io-client";
 import { constants } from "./constants";
 
-// function buildSocket() {
-//   const socket = socketIOClient(constants.SOCKETS_PATH);
-//   return socket;
-// }
+const socketIo = socketIOClient(constants.SOCKETS_PATH, {
+  transports: ["websocket"],
+});
 
-// export { buildSocket };
+function waitForConnection(): Promise<SocketIOClient.Socket> {
+  return new Promise((res) => {
+    if (socketIo.connected) {
+      res(socketIo);
+      return;
+    }
+    socketIo.on("connect", () => res(socketIo));
+  });
+}
 
-export default socketIOClient(constants.SOCKETS_PATH);
+export { waitForConnection };
+export default socketIo;

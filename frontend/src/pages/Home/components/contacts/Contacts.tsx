@@ -10,7 +10,7 @@ const Contacts: React.FC<IContainerProps> = ({ contacts }) => {
   return (
     <div>
       {contacts?.map((contact) => (
-        <Contact {...contact} />
+        <Contact {...contact} key={contact.id} />
       ))}
     </div>
   );
