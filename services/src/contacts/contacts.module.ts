@@ -11,5 +11,6 @@ import { ContactsService } from './contacts.service';
   imports: [EventModule, TypeOrmModule.forFeature([Contact, User])],
   controllers: [ContactsController],
   providers: [ContactsService, UserService],
+  exports: [ContactsService],
 })
 export class ContactsModule {}

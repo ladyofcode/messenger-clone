@@ -4,10 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { UserController } from './user.controller';
 import { EventModule } from 'src/events/event.module';
+import { ContactsModule } from 'src/contacts/contacts.module';
 
 @Global()
 @Module({
-  imports: [EventModule, TypeOrmModule.forFeature([User])],
+  imports: [EventModule, ContactsModule, TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],

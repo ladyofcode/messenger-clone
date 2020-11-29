@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserStatus } from '@shared/dto/user-dto';
-import { ContactsService } from 'src/contacts/contacts.service';
-import { EventService } from 'src/events/event.service';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 
@@ -11,8 +9,6 @@ type Optional<T> = { [P in keyof T]?: T[P] };
 @Injectable()
 export class UserService {
   constructor(
-    // private contactsService: ContactsService,
-    private eventService: EventService,
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
 
@@ -44,13 +40,6 @@ export class UserService {
       statusMessage: string | null;
     }>,
   ) {
-    // const contacts = await this.contactsService.listFor(id);
-    // const userIds = contacts.map((c) => c.id);
-    // this.eventService.sendEventToUsersIfAvailable(userIds, 'status-change', {
-    //   userId: id,
-    //   status: updates.status,
-    //   statusMessage: updates.statusMessage,
-    // });
     return this.usersRepository.update({ id }, updates);
   }
 

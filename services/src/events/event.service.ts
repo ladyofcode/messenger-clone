@@ -20,7 +20,7 @@ export class EventService {
   private authenticatedUsers: AuthenticatedUsers = {};
 
   constructor(
-    // private userService: UserService,
+    private userService: UserService,
     @InjectRepository(GatewayKey)
     private gatewayKeyRepository: Repository<GatewayKey>,
   ) {}
@@ -79,7 +79,7 @@ export class EventService {
       },
     );
     if (authedUser == null) return null;
-    // return this.userService.findOne(authedUser.userId);
+    return this.userService.findOne(authedUser.userId);
   }
 
   removeSocketId(socketId: string) {
@@ -103,11 +103,11 @@ export class EventService {
   }
 
   private setUserOffline(userId: number) {
-    // this.userService.update(userId, { status: 'offline' });
+    this.userService.update(userId, { status: 'offline' });
   }
 
   private setUserOnline(userId: number) {
-    // this.userService.update(userId, { status: 'online' });
+    this.userService.update(userId, { status: 'online' });
   }
 
   private keyForToken(token: string) {
