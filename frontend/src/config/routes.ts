@@ -20,6 +20,12 @@ const routes: IRoute[] = [
     exact: true,
     component: Pages.Registration,
   },
+  {
+    name: "login",
+    path: "/login",
+    exact: true,
+    component: Pages.Login,
+  },
 ];
 
 export { routes };
