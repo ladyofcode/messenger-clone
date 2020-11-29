@@ -8,7 +8,10 @@ import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
 import socketIOClient from "socket.io-client";
 import { constants } from "../../config/constants";
-import ChatWindow from "../../layouts/ChatWindow/ChatWindow";
+// import { socket } from "../../config/socket";
+import socket from "../../config/socket";
+import { authApi } from "../../api/Auth.api";
+// import { useSocket } from "../../hooks/services/useSocket";
 
 const list: MessageDTO[] = [
   {
@@ -51,21 +54,26 @@ const list: MessageDTO[] = [
 ];
 
 const customGroupName = ["Some friends", "Online", "Offline"];
-const socket = socketIOClient(constants.SOCKETS_PATH);
+
+// const eventName = authApi.getAuthenticationEvent();
+// const socket = socketIOClient(constants.SOCKETS_PATH);
 
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount } = useAuth();
+  const { logoutAccount, token } = useAuth();
+  // const { socket } = useSocket();
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("connected");
-    });
+    if (token) {
+      socket.emit("authenticate", { token }, (data: any) => {
+        console.log(data);
+      });
+    }
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [token]);
 
   if (contacts.loading) {
     return <Transition />;

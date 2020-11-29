@@ -4,6 +4,7 @@ import { Avatar } from "../../components//ChatWindow/Avatar";
 import { MessageBox } from "../../components//ChatWindow/MessageBox";
 import { InputBox } from "../../components//ChatWindow/InputBox";
 import { Styled } from "./ChatWindow.styles";
+import socket from "../../config/socket";
 
 // @ts-ignore
 // dumb shit does not work

@@ -1,18 +1,35 @@
+import { UserDTO } from "./user-dto";
 export const groupResource = {
   allMine: {
     method: "GET",
-    path: () => `/groups`
+    path: () => `/groups`,
   },
-  create: { 
+  groupForContactUser: {
+    method: "GET",
+    path: (otherUserId: number) => `/groups/contacts/${otherUserId}`,
+  },
+  create: {
     method: "POST",
     path: () => `/groups`,
-    body: (data: CreateGroupDTO) => data
+    body: (data: CreateGroupDTO) => data,
   },
-  delete: { 
+  delete: {
     method: "DELETE",
     path: (groupId: number) => `/groups/${groupId}`,
-  }
-} 
+  },
+  nudge: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/nudge`,
+  },
+  startTyping: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/start-typing`,
+  },
+  stopTyping: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/stop-typing`,
+  },
+};
 
 export interface CreateGroupDTO {
   name: string;
@@ -20,4 +37,12 @@ export interface CreateGroupDTO {
 
 export interface UpdateGroupDTO {
   name: string;
+}
+
+export interface GroupResponseDTO {
+  createdAt: string;
+  id: number;
+  name: string;
+  updatedAt: string;
+  users: UserDTO[];
 }
