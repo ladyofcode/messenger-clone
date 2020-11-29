@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { useInput } from "../../../hooks/useInput";
 import { Styled } from "../Auth.styles";
 
 interface IRegistrationProps {}
-interface IInputValues {
+export interface IInputValues {
   firstName: string;
   lastName: string;
   email: string;
@@ -20,18 +20,33 @@ const initialValue: IInputValues = {
 };
 
 const Registration: React.FC<IRegistrationProps> = () => {
+  const history = useHistory();
   const { registerAccount } = useAuth();
-  const { inputProps, values } = useInput<IInputValues>(initialValue);
+  const { inputProps, values, isEmpty } = useInput<IInputValues>(initialValue);
+  const { loading, isAuthenticated } = useAuth();
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    registerAccount(values);
+
+    if (isEmpty()) {
+      return;
+    }
+
+    const success = await registerAccount(values);
+
+    if (success) {
+      history.push("/login");
+    }
   };
+
+  if (!loading && isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Styled.Background>
       {/* Tabbs her implementation of an avatar */}
-      <div></div>
+      <div className="div"></div>
 
       <form onSubmit={handleSubmit}>
         <label>First Name</label>
@@ -41,7 +56,7 @@ const Registration: React.FC<IRegistrationProps> = () => {
         <input name="lastName" type="text" {...inputProps("lastName")} />
 
         <label>Email</label>
-        <input name="email" type="text" {...inputProps("email")} />
+        <input name="email" type="email" {...inputProps("email")} />
 
         <label>Password</label>
         <input name="password" type="password" {...inputProps("password")} />

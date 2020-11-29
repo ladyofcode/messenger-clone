@@ -1,5 +1,10 @@
-import { LoginDTO } from "./../../../common/src/dto/auth-dto";
-import { AuthResource, RegisterDTO } from "../common/dto/auth-dto";
+import { LoginDTO } from "../common/dto/auth-dto";
+import {
+  AuthResource,
+  LoginResponseDTO,
+  RegisterDTO,
+} from "../common/dto/auth-dto";
+import { UserDTO, UserResource } from "../common/dto/user-dto";
 import { makeRequest } from "../utils/makeRequest";
 
 class AuthApi {
@@ -8,7 +13,7 @@ class AuthApi {
 
     const endpoint = path();
 
-    return makeRequest(endpoint, {
+    return makeRequest<any>(endpoint, {
       method,
       body: JSON.stringify(payload),
     });
@@ -19,9 +24,29 @@ class AuthApi {
 
     const endpoint = path();
 
-    return makeRequest(endpoint, {
+    return makeRequest<LoginResponseDTO>(endpoint, {
       method,
       body: JSON.stringify(payload),
+    });
+  }
+
+  static async logout() {
+    const { method, path } = AuthResource.logout;
+
+    const endpoint = path();
+
+    return makeRequest<any>(endpoint, {
+      method,
+    });
+  }
+
+  static async me() {
+    const { method, path } = UserResource.currentUser;
+
+    const endpoint = path();
+
+    return makeRequest<UserDTO | null>(endpoint, {
+      method,
     });
   }
 }
