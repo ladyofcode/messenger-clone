@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Group } from './group.entity';
 import { GatewayKey } from './gatewaykey.entity';
@@ -51,6 +52,6 @@ export class User {
   @ManyToMany(() => Group, (group) => group.users)
   groups: Group[];
 
-  @ManyToOne(() => GatewayKey)
+  @OneToMany(() => GatewayKey, (gwk) => gwk.user)
   gatewayKeys: GatewayKey[];
 }

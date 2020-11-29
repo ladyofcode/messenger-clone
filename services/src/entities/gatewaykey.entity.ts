@@ -3,7 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -12,7 +12,7 @@ export class GatewayKey {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => User, (user) => user.gatewayKeys)
+  @ManyToOne(() => User, (user) => user.gatewayKeys)
   user: User;
 
   @Column()

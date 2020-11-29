@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -12,7 +13,7 @@ import { CreateGroupDTO, UpdateGroupDTO } from '@shared/dto/group-dto';
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';
-import { UserPipe } from 'src/user.pipe';
+import { UserPipe } from 'src/user/user.pipe';
 import { GroupsService } from './groups.service';
 
 @UseGuards(SessionGuard)
@@ -35,6 +36,8 @@ export class GroupsController {
     @CurrentUser() currentUser: User,
     @Param('id', UserPipe) contactUser: User,
   ) {
+    if (contactUser.id === currentUser.id)
+      throw new BadRequestException("Can't make a group with yourself");
     return this.groupsService.groupForContactUser(currentUser, contactUser);
   }
 
