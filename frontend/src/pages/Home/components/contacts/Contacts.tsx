@@ -4,13 +4,9 @@ import { ContactDTO } from "../../../../common/dto/contact-dto";
 
 interface IContainerProps {
   contacts: ContactDTO | null;
-  loading: boolean;
 }
 
-const Contacts: React.FC<IContainerProps> = ({ contacts, loading }) => {
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+const Contacts: React.FC<IContainerProps> = ({ contacts }) => {
   return (
     <div>
       {contacts?.map((contact) => (

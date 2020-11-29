@@ -8,7 +8,6 @@ class ContactsApi {
     const endpoint = path();
 
     const data = await makeRequest<ContactDTO | null>(endpoint, { method });
-    console.log(data);
     return data;
   }
 }
