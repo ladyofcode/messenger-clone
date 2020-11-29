@@ -1,13 +1,16 @@
 {
 	"folders": [
 		{
-			"path": "common",
+			"path": "common"
 		},
 		{
 			"path": "frontend"
 		},
 		{
 			"path": "services"
+		},
+		{
+			"path": "proxy"
 		}
 	],
 	"settings": {
