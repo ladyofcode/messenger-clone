@@ -1,6 +1,6 @@
 import React, { FormEvent } from "react";
-import Modal from "react-modal";
 import { ContactsApi } from "../../api/Contacts.api";
+import * as SC from "./AddContact.styles";
 
 const customStyles = {
   content: {
@@ -10,56 +10,72 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    padding: "5rem",
+  },
+  stack: {
+    display: "flex",
+    flexFlow: "column nowrap",
   },
 };
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement("#fancyIdForElectron");
+interface IContactModalProps {
+  modalIsOpen: any;
+  setIsOpen: any;
+}
 
-export const AddContactModal: React.FC = () => {
+const AddContactModal: React.FC<IContactModalProps> = ({
+  modalIsOpen,
+  setIsOpen,
+}) => {
   // @ts-ignore
   let subtitle = null;
-  const [email, setEmail] = React.useState('');
-  const [modalIsOpen, setIsOpen] = React.useState(true);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // @ts-ignore
-    subtitle.style.color = "#f00";
-  }
+  const [email, setEmail] = React.useState("");
 
   function closeModal() {
     setIsOpen(false);
   }
 
   function handleSubmit(event: FormEvent) {
-    event.preventDefault();  // not sure if necessary
-    ContactsApi.addContact({email});
+    event.preventDefault(); // not sure if necessary
+    if (email.length <= 0) return;
+    ContactsApi.addContact({ email });
   }
 
   return (
     <div>
-      <button onClick={openModal}>Add a Contact</button>
-      <Modal
+      <SC.Container
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={customStyles}
         contentLabel="Add a contact"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Add a contact</h2>
-        <form onSubmit={e => handleSubmit(e)}>
-          <label>
-            Email:
-            <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-          </label>
-          <input type="submit" value="Add" />
-          <button onClick={closeModal}>cancel</button>
-        </form>
-      </Modal>
+        <SC.InnerContainer>
+          <SC.Heading ref={(_subtitle) => (subtitle = _subtitle)}>
+            Add a contact
+          </SC.Heading>
+          <form onSubmit={(e) => handleSubmit(e)} style={customStyles.stack}>
+            <SC.Label>
+              Email:
+              <SC.Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </SC.Label>
+            <SC.Box>
+              <SC.Button type="submit" value="Add" className="primary mr-2">
+                Add Contact
+              </SC.Button>
+              <SC.Button onClick={closeModal} className="secondary">
+                cancel
+              </SC.Button>
+            </SC.Box>
+          </form>
+        </SC.InnerContainer>
+      </SC.Container>
     </div>
   );
 };
+
+export default AddContactModal;

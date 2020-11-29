@@ -5,8 +5,6 @@ import { useAuth } from "../../../hooks/services/useAuth";
 import { Styled } from "../Auth.styles";
 import Spinner from "../Spinner";
 
-import { AddContactModal } from "../../../components/AddContactModal/AddContactModal";
-
 interface ILoginProps {}
 
 export interface IInputValues {
@@ -114,8 +112,7 @@ const Login: React.FC<ILoginProps> = () => {
               <Spinner />
             </button>
           ) : (
-            <div><button value="Submit">Login</button>
-            <span><AddContactModal></AddContactModal></span></div>
+            <button value="Submit">Login</button>
           )}
         </form>
       </Styled.Background>
