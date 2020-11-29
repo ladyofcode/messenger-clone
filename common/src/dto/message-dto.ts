@@ -7,12 +7,12 @@ export const MessageResource = {
 	},
   create: {
     method: "POST",
-    path: () => `/messages`,
+    path: (groupId: number) => `/groups/${groupId}/messages`,
     body: (data: CreateMessageDTO) => data
   },
   remove: { 
     method: "DELETE",
-    path: (messageId: number) => `/messages/${messageId}`
+    path: (groupId: number, messageId: number) => `/groups/${groupId}/messages/${messageId}`
   }
 } 
 
