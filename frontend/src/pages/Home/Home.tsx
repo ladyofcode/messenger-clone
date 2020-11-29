@@ -1,24 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/services/useAuth";
 import { Styled } from "./Home.styles";
 import { Contacts } from "./components";
 import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
 import { waitForConnection } from "../../config/socket";
-// import { constants } from "../../config/constants";
-// import socketIOClient from "socket.io-client";
-
-// const socket = socketIOClient("http://localhost:30001", {
-//   transports: ["websocket"],
-// });
-
-// socket.on("connection", (client: any) => {
-//   console.log("woef");
-// });
+import { AddContactModal } from "../../components/";
 
 const Home: React.FC = () => {
   const contacts = useContacts();
   const { logoutAccount, token } = useAuth();
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (!token) return;
@@ -35,6 +27,7 @@ const Home: React.FC = () => {
 
   return (
     <React.Fragment>
+      <AddContactModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
       <Styled.TopBar>
         <div>Image</div>
         <div>
@@ -60,8 +53,8 @@ const Home: React.FC = () => {
       <Styled.GroupsContainer>
         <Contacts {...contacts} />
 
-        <Styled.AddContact>
-          <span>+</span> Add a contact
+        <Styled.AddContact as="button" onClick={() => setIsOpen(true)}>
+          + Add a contact
         </Styled.AddContact>
       </Styled.GroupsContainer>
     </React.Fragment>
