@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { Styled } from "./InputBox.styles";
 import { MessageApi as messageApi } from "../../api/Message.api";
 import socket from "../../config/socket";
+import { useGroup } from "../../hooks/services/useGroup";
 
 export function InputBox(props: any) {
+  const { group } = useGroup();
   const [value, setValue] = useState<string>("");
 
+  const handleChange = (e: any) => {
+    setValue(e.target.value);
+  };
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (value.length > 0) {
-      // messageApi.sendMessage({
-      // })
+      messageApi.sendMessage({
+        groupId: group.id,
+        message: value,
+      });
     }
   };
 
@@ -23,8 +30,12 @@ export function InputBox(props: any) {
         <img></img>
         <img></img>
       </div>
-      <form>
-        <textarea className="inputText"></textarea>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          className="inputText"
+          value={value}
+          onChange={handleChange}
+        ></textarea>
         <button className="sendButton">Send</button>
       </form>
     </Styled.MessageEntry>

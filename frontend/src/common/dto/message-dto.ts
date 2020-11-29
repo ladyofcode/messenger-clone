@@ -1,3 +1,4 @@
+import { UserDTO } from "./user-dto";
 
 export const MessageResource = {
 	all: {
@@ -17,6 +18,7 @@ export const MessageResource = {
 
 export interface MessageDTO {
     id: number
+    sender: UserDTO;
     message: string
     createdAt:string
 } 

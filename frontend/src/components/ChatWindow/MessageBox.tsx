@@ -8,22 +8,10 @@ export function MessageBox(props: any) {
 
   return (
     <Styled.MessageBox>
-      <div className="header"> {/* only contains the 'To:...' field */} </div>
-      {/* <div className="messages"> */}
-      {/* { props.messages.map( m => (<Message name={m.name} text={m.text} ></Message>)) } */}
-      {/* </div> */}
+      <div className="header"></div>
       {messages.map((m: MessageDTO) => (
-        <Message {...m} key={m.id} />
+        <Message {...m} name={m.sender.id} key={m.id} />
       ))}
-      {/* <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some random af messaging going on up in here" name="Loganette" />
-      <Message text="Some veeeeeeeeeeery random af messaging going on up in here" name="Loganette" /> */}
     </Styled.MessageBox>
   );
 }
