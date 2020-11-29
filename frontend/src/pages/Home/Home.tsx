@@ -8,6 +8,7 @@ import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
 import socketIOClient from "socket.io-client";
 import { constants } from "../../config/constants";
+import ChatWindow from "../../layouts/ChatWindow/ChatWindow";
 
 const list: MessageDTO[] = [
   {
