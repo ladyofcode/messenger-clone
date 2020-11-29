@@ -15,7 +15,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement("#fancyIdForElectron");
 
-const Test: React.FC = () => {
+export const AddContactModal: React.FC = () => {
   // @ts-ignore
   let subtitle = null;
   const [modalIsOpen, setIsOpen] = React.useState(true);
@@ -35,28 +35,22 @@ const Test: React.FC = () => {
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
+      <button onClick={openModal}>Add a Contact</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Add a contact"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Add a contact</h2>
+        <div>Email</div>
         <form>
           <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
+          <button>Add</button>
+          <button onClick={closeModal}>cancel</button>
         </form>
       </Modal>
     </div>
   );
 };
-
-export default test;
-export {};
