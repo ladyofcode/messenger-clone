@@ -67,12 +67,12 @@ const GroupsContainer = styled.div`
 const AddContact = styled.div`
     background: rgb(252,252,252);
     height: 100%;
-    border: 2px #868686 solid;
-    padding: 10px 10px;
+    /* border: 2px #868686 solid; */
+    padding: 0px 10px;
     width: 200px;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 20px;
 
     span {

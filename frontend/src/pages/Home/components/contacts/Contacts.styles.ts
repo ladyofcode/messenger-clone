@@ -6,4 +6,13 @@ const Container = styled.ul`
   list-style: none;
 `;
 
-export { Container };
+const ContactGroupTitle = styled.h2`
+  color: #030363;
+  font-size: 1em;
+  margin-bottom: 0.5em;
+`;
+
+export const Styled = { 
+  Container, 
+  ContactGroupTitle 
+};

@@ -64,16 +64,16 @@ const Login: React.FC<ILoginProps> = () => {
             required
           />
 
-          <span>
+          <div>
             <label>Status</label>
             <select id="status" name="status">
               <option value="online">Online</option>
               <option value="offline">Offline</option>
               <option value="dnd">Do not disturb</option>
             </select>
-          </span>
+          </div>
 
-          <span>
+          <div>
             <input
               type="checkbox"
               id="remember"
@@ -81,9 +81,9 @@ const Login: React.FC<ILoginProps> = () => {
               value="remember"
             />
             <label htmlFor="remember">Remember me</label>
-          </span>
+          </div>
 
-          <span>
+          <div>
             <input
               type="checkbox"
               id="password"
@@ -91,9 +91,9 @@ const Login: React.FC<ILoginProps> = () => {
               value="password"
             />
             <label htmlFor="password">Remember my password</label>
-          </span>
+          </div>
 
-          <span>
+          <div>
             <input
               type="checkbox"
               id="automatic"
@@ -101,7 +101,7 @@ const Login: React.FC<ILoginProps> = () => {
               value="automatic"
             />
             <label htmlFor="automatic">Sign me in automatically</label>
-          </span>
+          </div>
 
           <Link to="/register" style={{ marginBottom: "2rem" }}>
             Don't have an account?

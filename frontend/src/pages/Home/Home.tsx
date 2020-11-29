@@ -7,8 +7,6 @@ import { Transition } from "../../components";
 import { waitForConnection } from "../../config/socket";
 import { AddContactModal } from "../../components/";
 
-
-
 const Home: React.FC = () => {
   const contacts = useContacts();
   const { logoutAccount, token, user } = useAuth();
@@ -55,7 +53,7 @@ const Home: React.FC = () => {
 
       <Styled.GroupsContainer>
         <Contacts {...contacts} />
-        <Styled.AddContact>
+        <Styled.AddContact onClick={() => setIsOpen(true)}>
           <span>+</span> Add a contact
         </Styled.AddContact>
       </Styled.GroupsContainer>
