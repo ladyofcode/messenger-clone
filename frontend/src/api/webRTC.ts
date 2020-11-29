@@ -1,4 +1,4 @@
-import socketIo, {waitForConnection} from '../config/socket';
+import {waitForConnection} from '../config/socket';
 
 export class WebRTC {
 
@@ -9,6 +9,8 @@ export class WebRTC {
         offerToReceiveAudio: true,
         offerToReceiveVideo: true
     };
+
+    dataChannel: RTCDataChannel = this.peerConnection.createDataChannel("mydatachannel");
 
     constructor(){
         this.init();
@@ -22,18 +24,15 @@ export class WebRTC {
         });
 
         this.io = await waitForConnection();
-        setTimeout(()=>{
-            this.setupWebRTC()
-        },1000)
-
+        this.setupWebRTC()
 
     }
 
 
     setupWebRTC(){
-        this.peerConnection.onconnectionstatechange = (event) => {console.info('onconnectionstatechange', event)}
-        this.peerConnection.oniceconnectionstatechange = (event) => {console.info('oniceconnectionstatechange',event)}
-        this.peerConnection.onicegatheringstatechange = (event) => {console.info('onicegatheringstatechange',event)}
+        //this.peerConnection.onconnectionstatechange = (event) => {console.info('onconnectionstatechange', event)}
+        //this.peerConnection.oniceconnectionstatechange = (event) => {console.info('oniceconnectionstatechange',event)}
+        //this.peerConnection.onicegatheringstatechange = (event) => {console.info('onicegatheringstatechange',event)}
 
         this.peerConnection.ontrack = (e: RTCTrackEvent)=>{
             //Get the video stream in e.streams
@@ -50,11 +49,13 @@ export class WebRTC {
             video.autoplay = true;
             document.body.append(video);
         }
-
+        this.listenRemoteDataChannel();
+        this.createDataChannel();
+        
         if(this.io){
 
             this.peerConnection.onicecandidate = (e: RTCPeerConnectionIceEvent)=>{
-                console.log('onicecandidate', e);
+                //console.log('onicecandidate', e);
                 if(e.candidate){
                     this.io?.emit('candidate', e.candidate)
                 }
@@ -75,28 +76,50 @@ export class WebRTC {
     async rtcOffer(){
         const offerDescription = await this.peerConnection.createOffer(this.sdpConstraints);
         await this.peerConnection.setLocalDescription(offerDescription);
-        console.log('offer',offerDescription);
+        //console.log('offer',offerDescription);
         this.io?.emit('offer', offerDescription)
     }
 
     //incoming
     async rtcAnswer(offer: any){
-        console.log('answer', offer);
+        //console.log('answer', offer);
         const offerDescription = new RTCSessionDescription(offer);
         await this.peerConnection.setRemoteDescription(offerDescription);
-        const answerDescription = await this.peerConnection.createAnswer();
-        await this.peerConnection.setLocalDescription(answerDescription);
-        this.io?.emit('offer', answerDescription)
+        try{
+            const answerDescription = await this.peerConnection.createAnswer();
+            await this.peerConnection.setLocalDescription(answerDescription);
+            this.io?.emit('offer', answerDescription)
+        }catch(e){
+            return
+        }
     }
 
     //incoming
     async handleCandidate(candidateMessage:any){
-        console.log('candidateMessage',candidateMessage);
+        //console.log('candidateMessage',candidateMessage);
         const candidate = new RTCIceCandidate(candidateMessage);
         try{
             await this.peerConnection.addIceCandidate(candidate);
         } catch(e){
             return
+        }
+    }
+
+    createDataChannel(){
+        this.dataChannel = this.peerConnection.createDataChannel("mydatachannel");
+        this.dataChannel.onopen = function(e:Event){ 
+            console.log("data channel open");
+            setInterval(()=>{
+                this.send("stuff in channel");
+            },1000)
+        }
+    }
+
+    listenRemoteDataChannel(){
+        this.peerConnection.ondatachannel = (e:RTCDataChannelEvent)=>{
+            e.channel.onclose = function(e:Event){ console.log("data channel close")};
+            e.channel.onmessage = function(e:MessageEvent){ console.log("data channel onmessage", e)}
+            e.channel.onerror = function(e:RTCErrorEvent){ console.log("data channel onerror", e)}
         }
     }
 
