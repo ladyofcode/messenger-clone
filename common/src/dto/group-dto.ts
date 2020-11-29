@@ -15,6 +15,18 @@ export const groupResource = {
   delete: { 
     method: "DELETE",
     path: (groupId: number) => `/groups/${groupId}`,
+  },
+  nudge: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/nudge`
+  },
+  startTyping: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/start-typing`
+  },
+  stopTyping: {
+    method: "POST",
+    path: (groupId: number) => `/groups/${groupId}/stop-typing`
   }
 } 
 

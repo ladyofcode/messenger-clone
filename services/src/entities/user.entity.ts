@@ -6,7 +6,6 @@ import {
   ManyToMany,
   UpdateDateColumn,
   CreateDateColumn,
-  ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { Group } from './group.entity';
