@@ -4,6 +4,7 @@ import { useInput } from "../../../hooks/useInput";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { Styled } from "../Auth.styles";
 import Spinner from "../Spinner";
+import MsnUserIcon from "../../../components/icons/MsnUserIcon"; 
 
 interface ILoginProps {}
 
@@ -48,8 +49,7 @@ const Login: React.FC<ILoginProps> = () => {
   return (
     <>
       <Styled.Background>
-        {/* Tabbs her implementation of an avatar */}
-        <div className="div"></div>
+        <MsnUserIcon />
 
         <form onSubmit={handleSubmit}>
           {error && <b style={{ marginBottom: ".5rem" }}>{error}</b>}

@@ -19,13 +19,12 @@ const Background = styled.div`
   align-items: center;
   color: #1e2354;
 
-  .div {
-    background-color: purple;
+  /* img {
     width: 200px;
     height: 200px;
     margin-bottom: 30px;
     border-radius: 5px;
-  }
+  } */
 
   form {
     min-width: 300px;

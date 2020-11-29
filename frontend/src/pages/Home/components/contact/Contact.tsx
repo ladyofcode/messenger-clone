@@ -1,6 +1,5 @@
 import React from "react";
 import { UserDTO } from "../../../../common/dto/user-dto";
-import MsnUserIcon from "../../../../components/icons/MsnUserIcon";
 import { MessageApi as messageApi } from "../../../../api/Message.api";
 import * as SC from "./Contact.styles";
 import { useHistory } from "react-router-dom";
@@ -26,7 +25,7 @@ const Contact = ({ id, firstName, lastName }: UserDTO) => {
 
   return (
     <SC.Container as="div" onClick={handleNavigation}>
-      <MsnUserIcon />
+      {/* <MsnUserIcon /> */}
       <SC.Username>{displayName}</SC.Username>
     </SC.Container>
   );

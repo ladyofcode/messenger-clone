@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+const HomeContainer = styled.div`
+    background: rgb(252,252,252);
+    height: 100%;
+`;
+
 const TopBar = styled.header`
     width: 100%;
     display: flex;
@@ -9,17 +14,6 @@ const TopBar = styled.header`
 
     h2 {
         color: #5C5C5C;
-    }
-
-    > div:first-of-type {
-        /* float: left; */
-        width: 80px;
-        height: 80px;
-        background-color: #CBDAEF;
-        border: 1px #dbdbdb solid;
-        border-radius: 5px;
-        margin: 20px;
-        flex-shrink: 0;
     }
 
     > div:last-of-type {
@@ -38,7 +32,7 @@ const TopBar = styled.header`
 
     p {
         font-weight: normal;
-        /* max-width: 400px; */
+        max-width: 400px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -51,6 +45,17 @@ const TopBar = styled.header`
         margin-left: 10px;
     }
 
+`;
+
+const Avatar = styled.img`
+    width: 80px;
+    height: 80px;
+    background-color: #f5f6f6;
+    border: 1px #bccfd6 solid;
+    border-radius: 5px;
+    margin: 20px;
+    flex-shrink: 0;
+    padding: 8px;
 `;
 
 const GroupsContainer = styled.div`
@@ -77,8 +82,9 @@ const AddContact = styled.div`
 `;
 
 export const Styled = {
+    HomeContainer,
     TopBar,
     GroupsContainer,
     AddContact,
-    
+    Avatar,
 };

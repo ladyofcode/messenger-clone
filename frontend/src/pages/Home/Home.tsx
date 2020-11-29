@@ -7,10 +7,13 @@ import { Transition } from "../../components";
 import { waitForConnection } from "../../config/socket";
 import { AddContactModal } from "../../components/";
 
+
+
 const Home: React.FC = () => {
   const contacts = useContacts();
-  const { logoutAccount, token } = useAuth();
+  const { logoutAccount, token, user } = useAuth();
   const [modalIsOpen, setIsOpen] = useState(false);
+  const avatarSeed = user!.firstName + user!.lastName;
 
   useEffect(() => {
     if (!token) return;
@@ -26,20 +29,20 @@ const Home: React.FC = () => {
   }
 
   return (
-    <React.Fragment>
+    <Styled.HomeContainer>
       <AddContactModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
       <Styled.TopBar>
-        <div>Image</div>
+        <Styled.Avatar src={`https://avatars.dicebear.com/api/bottts/${avatarSeed}.svg`} />
         <div>
           <div>
-            <h2>SoWhale </h2>
+            <h2>{user!.firstName} {user!.lastName}</h2>
             <select id="status" name="status">
               <option value="online">Online</option>
               <option value="offline">Offline</option>
               <option value="dnd">Do not disturb</option>
             </select>
           </div>
-          <p>Donny says he's going insane - but he's already there</p>
+          <p>{user!.statusMessage}</p>
         </div>
         {/* remove this whenever */}
         <button
@@ -52,12 +55,11 @@ const Home: React.FC = () => {
 
       <Styled.GroupsContainer>
         <Contacts {...contacts} />
-
-        <Styled.AddContact as="button" onClick={() => setIsOpen(true)}>
-          + Add a contact
+        <Styled.AddContact>
+          <span>+</span> Add a contact
         </Styled.AddContact>
       </Styled.GroupsContainer>
-    </React.Fragment>
+    </Styled.HomeContainer>
   );
 };
 
