@@ -1,5 +1,6 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import Modal from "react-modal";
+import { ContactsApi } from "../../api/Contacts.api";
 
 const customStyles = {
   content: {
@@ -18,6 +19,7 @@ const customStyles = {
 export const AddContactModal: React.FC = () => {
   // @ts-ignore
   let subtitle = null;
+  const [email, setEmail] = React.useState('');
   const [modalIsOpen, setIsOpen] = React.useState(true);
   function openModal() {
     setIsOpen(true);
@@ -33,6 +35,11 @@ export const AddContactModal: React.FC = () => {
     setIsOpen(false);
   }
 
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();  // not sure if necessary
+    ContactsApi.addContact({email});
+  }
+
   return (
     <div>
       <button onClick={openModal}>Add a Contact</button>
@@ -44,10 +51,12 @@ export const AddContactModal: React.FC = () => {
         contentLabel="Add a contact"
       >
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Add a contact</h2>
-        <div>Email</div>
-        <form>
-          <input />
-          <button>Add</button>
+        <form onSubmit={e => handleSubmit(e)}>
+          <label>
+            Email:
+            <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+          </label>
+          <input type="submit" value="Add" />
           <button onClick={closeModal}>cancel</button>
         </form>
       </Modal>
