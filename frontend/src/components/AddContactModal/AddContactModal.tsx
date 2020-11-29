@@ -33,12 +33,6 @@ const AddContactModal: React.FC<IContactModalProps> = ({
   let subtitle = null;
   const [email, setEmail] = React.useState("");
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // @ts-ignore
-    subtitle.style.color = "#080808";
-  }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -53,12 +47,13 @@ const AddContactModal: React.FC<IContactModalProps> = ({
     <div>
       <SC.Container
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         contentLabel="Add a contact"
       >
         <SC.InnerContainer>
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Add a contact</h2>
+          <SC.Heading ref={(_subtitle) => (subtitle = _subtitle)}>
+            Add a contact
+          </SC.Heading>
           <form onSubmit={(e) => handleSubmit(e)} style={customStyles.stack}>
             <SC.Label>
               Email:
@@ -69,10 +64,12 @@ const AddContactModal: React.FC<IContactModalProps> = ({
               />
             </SC.Label>
             <SC.Box>
-              <SC.Button type="submit" value="Add" className="mr-2">
+              <SC.Button type="submit" value="Add" className="primary mr-2">
                 Add Contact
               </SC.Button>
-              <SC.Button onClick={closeModal}>cancel</SC.Button>
+              <SC.Button onClick={closeModal} className="secondary">
+                cancel
+              </SC.Button>
             </SC.Box>
           </form>
         </SC.InnerContainer>
