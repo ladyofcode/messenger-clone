@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import ContactGroup from "../../components/ContactGroup/ContactGroup";
 import { useAuth } from "../../hooks/services/useAuth";
 import { MessageDTO } from "../../common/dto/message-dto";
@@ -6,6 +6,8 @@ import { Styled } from "./Home.styles";
 import { Contacts } from "./components";
 import { useContacts } from "../../hooks/useContacts";
 import { Transition } from "../../components";
+import socketIOClient from "socket.io-client";
+import { constants } from "../../config/constants";
 
 const list: MessageDTO[] = [
   {
@@ -48,10 +50,21 @@ const list: MessageDTO[] = [
 ];
 
 const customGroupName = ["Some friends", "Online", "Offline"];
+const socket = socketIOClient(constants.SOCKETS_PATH);
 
 const Home: React.FC = () => {
   const contacts = useContacts();
   const { logoutAccount } = useAuth();
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   if (contacts.loading) {
     return <Transition />;

@@ -14,6 +14,7 @@ function createWindow() {
     height: 800,
     minHeight: 800,
     webPreferences: {
+      nativeWindowOpen: true,
       nodeIntegration: true,
     },
   });

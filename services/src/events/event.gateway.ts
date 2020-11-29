@@ -11,7 +11,7 @@ import { Server } from 'socket.io';
 import { EventService } from './event.service';
 
 @WebSocketGateway(30001, {
-  transports: ['websocket'],
+  transports: ['websocket', 'polling'],
 })
 export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()

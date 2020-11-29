@@ -12,7 +12,6 @@ const Contacts: React.FC<IContainerProps> = ({ contacts }) => {
       {contacts?.map((contact) => (
         <Contact {...contact} />
       ))}
-      {JSON.stringify(contacts)}
     </div>
   );
 };
