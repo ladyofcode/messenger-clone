@@ -1,12 +1,12 @@
 import React from "react";
 import { UserDTO } from "../../../../common/dto/user-dto";
-import MsnUserIcon from "../../../../components/icons/MsnUserIcon";
 import { MessageApi as messageApi } from "../../../../api/Message.api";
 import * as SC from "./Contact.styles";
 import { useHistory } from "react-router-dom";
 import { useGroup } from "../../../../hooks/services/useGroup";
+import {ReactComponent as Icon} from './user-shape.svg'
 
-const Contact = ({ id, firstName, lastName }: UserDTO) => {
+const Contact = ({ id, firstName, lastName, status }: UserDTO) => {
   const history = useHistory();
   const { setGroup } = useGroup();
   const displayName = `${firstName} ${lastName}`;
@@ -26,7 +26,15 @@ const Contact = ({ id, firstName, lastName }: UserDTO) => {
 
   return (
     <SC.Container as="div" onClick={handleNavigation}>
-      <MsnUserIcon />
+      <Icon 
+        height="15px" 
+        width="15px" 
+        fill={
+          status === 'online' ? "#86CA63" 
+          : status === 'away' ? "#e2a440"
+          : "#e75f5f"
+        } 
+      />
       <SC.Username>{displayName}</SC.Username>
     </SC.Container>
   );

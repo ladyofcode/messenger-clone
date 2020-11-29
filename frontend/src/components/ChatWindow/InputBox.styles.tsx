@@ -5,6 +5,15 @@ const MessageEntry = styled.div`
     width: 100%;
     margin-bottom: 50px;
     display: flex;
+    flex-direction: column;
+
+    > div {
+        display: flex;
+        padding: 5px 0;
+        background: rgb(252,252,252);
+        border: 1px solid #9EA7B0;
+        border-radius: 5px 5px 0 0;
+    }
 
     form {
         display: flex;
@@ -13,7 +22,6 @@ const MessageEntry = styled.div`
 
         textarea {
             width: 100%; 
-            margin-right: 20px;
             border: 1px solid #9EA7B0;
             border-radius: 0px 0px 0px 5px;
             background-color: #FDFDFD;

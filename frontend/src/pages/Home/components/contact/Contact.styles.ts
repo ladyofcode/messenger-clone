@@ -12,7 +12,7 @@ const Container = styled(Link)`
 
 const Username = styled.span`
   letter-spacing: 0.05em;
-  font-weight: 600;
+  font-weight: normal;
   margin-left: 0.5rem;
 `;
 

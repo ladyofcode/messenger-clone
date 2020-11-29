@@ -19,14 +19,6 @@ const Background = styled.div`
   align-items: center;
   color: #1e2354;
 
-  .div {
-    background-color: purple;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 30px;
-    border-radius: 5px;
-  }
-
   form {
     min-width: 300px;
     display: flex;
@@ -40,7 +32,9 @@ const Background = styled.div`
     input[type="email"],
     input[type="password"] {
       margin-bottom: var(--group-spacing);
-      padding: 5px 10px;
+      padding: 10px 15px;
+      border: 1px solid #ACBACC;
+      border-radius: 5px;
     }
 
     input[type="text"],
@@ -49,15 +43,25 @@ const Background = styled.div`
       border-radius: 5px;
     }
 
-    span {
+    div {
+      display: flex;
+      align-items: center;
       margin-bottom: var(--checkbox-spacing);
+
+      label {
+        margin-left: 5px;
+      }
     }
 
-    span:first-of-type {
+    div:first-of-type {
       margin-bottom: var(--group-spacing);
+
+      label {
+        margin-left: 0px;
+      }
     }
 
-    span:last-of-type {
+    div:last-of-type {
       margin-bottom: var(--group-spacing);
     }
 
@@ -78,6 +82,7 @@ const Background = styled.div`
       font-weight: bold;
       color: #1e2354;
       border: 1px #d4d4d4;
+      margin-top: 30px;
     }
   }
 `;

@@ -45,11 +45,11 @@ export function InputBox(props: any) {
   return (
     <Styled.MessageEntry>
       <div>
-        <img></img>
-        <img></img>
-        <img></img>
-        <img></img>
-        <img></img>
+        <span role="img">😬</span>
+        <span role="img">😬</span>
+        <span role="img">😬</span>
+        <span role="img">😬</span>
+        <span role="img">😬</span>
       </div>
       <form onSubmit={handleSubmit}>
         <textarea

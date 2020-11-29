@@ -3,6 +3,8 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import { useAuth } from "../../../hooks/services/useAuth";
 import { useInput } from "../../../hooks/useInput";
 import { Styled } from "../Auth.styles";
+import MsnUserIcon from "../../../components/icons/MsnUserIcon"; 
+
 
 interface IRegistrationProps {}
 export interface IInputValues {
@@ -45,8 +47,8 @@ const Registration: React.FC<IRegistrationProps> = () => {
 
   return (
     <Styled.Background>
-      {/* Tabbs her implementation of an avatar */}
-      <div className="div"></div>
+
+      <MsnUserIcon />
 
       <form onSubmit={handleSubmit}>
         <label>First Name</label>
@@ -61,10 +63,8 @@ const Registration: React.FC<IRegistrationProps> = () => {
         <label>Password</label>
         <input name="password" type="password" {...inputProps("password")} />
 
-        <span>
-          <Link to="/login">Already have an account?</Link>
-        </span>
-
+        <Link to="/login">Already have an account?</Link>
+  
         <button type="submit" value="Submit">
           Register
         </button>
