@@ -77,7 +77,6 @@ const AddContact = styled.div`
 
     span {
         color: green;
-
     }
 `;
 

@@ -43,12 +43,12 @@ const Home: React.FC = () => {
           <p>{user!.statusMessage}</p>
         </div>
         {/* remove this whenever */}
-        <button
+        {/* <button
           style={{ width: "100px", height: "50px" }}
           onClick={() => logoutAccount()}
         >
           logout
-        </button>
+        </button> */}
       </Styled.TopBar>
 
       <Styled.GroupsContainer>

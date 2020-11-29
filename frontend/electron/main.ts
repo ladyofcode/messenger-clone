@@ -1,9 +1,12 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, dialog, Menu } from "electron";
+
 import * as path from "path";
 import * as isDev from "electron-is-dev";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
 } from "electron-devtools-installer";
+
+const applicationMenu = require('./menu');
 
 let win: BrowserWindow | null = null;
 
@@ -55,7 +58,13 @@ function createWindow() {
   }
 }
 
-app.on("ready", createWindow);
+// app.on("ready", createWindow);
+
+app.on('ready', () => {
+  Menu.setApplicationMenu(applicationMenu);
+  createWindow();
+});
+
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
