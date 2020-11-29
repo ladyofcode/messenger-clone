@@ -20,11 +20,11 @@ export class EventGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private eventService: EventService) {}
 
   async handleConnection() {
-    //this.server.emit('users', 'ok');
+    //
   }
 
-  async handleDisconnect() {
-    //this.server.emit('users', 'ok')
+  async handleDisconnect(@ConnectedSocket() socket: Socket) {
+    this.eventService.removeSocketId(socket.id);
   }
 
   @SubscribeMessage('authenticate')

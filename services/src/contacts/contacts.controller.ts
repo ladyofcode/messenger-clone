@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
 import { SessionGuard } from 'src/authentication/session.guard';
 import { CurrentUser } from 'src/authentication/user.decorator';
 import { User } from 'src/entities/user.entity';

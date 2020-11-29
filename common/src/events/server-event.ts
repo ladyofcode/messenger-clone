@@ -1,18 +1,20 @@
+
 /**
- * These are the events that the server can send to the client
+ * -----------------
+ * - Message Event -
+ * -----------------
+ * 
+ * - DESCRIPTION
+ * this event gets thrown whenever a message is sent by another user
+ * that this user has access to
+ * 
+ * - SPECIFICS 
+ * Name: "message"
+ * Data: MessageDTO
+ * 
+ * - USAGE
+ * io.on('message', (message: MessageDTO) => {
+ * 	console.log('received a message!!!');
+ * })
  */
 
-export interface ISocketEvent<T> {
-    event: string
-    message: T
-}
-
-
-//Example Event
-
-// export interface NudgeEvent implements ISocketEvent<{id:number}> {
-//     event = 'nudge'
-//     message = {
-//         id
-//     }
-// }

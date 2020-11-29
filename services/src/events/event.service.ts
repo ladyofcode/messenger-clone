@@ -25,6 +25,32 @@ export class EventService {
     private gatewayKeyRepository: Repository<GatewayKey>,
   ) {}
 
+  async sendEventToUsersIfAvailable(
+    userIds: number[],
+    name: string,
+    message: any,
+  ) {
+    userIds.forEach((userId) => {
+      this.sendEventToUserIfAvailable(userId, name, message);
+    });
+  }
+
+  sendEventToUserIfAvailable(userId: number, name: string, message: any) {
+    const userData = this.authenticatedUsers[userId];
+    if (userData == null || userData.socketIds.length === 0) return;
+    console.log(
+      'Sending event',
+      name,
+      'to UID',
+      userId,
+      'with content',
+      message,
+    );
+    userData.socketIds.forEach((socketId) => {
+      this.server.to(socketId).emit(name, message);
+    });
+  }
+
   createGatewayToken(userId: number) {
     const key = this.gatewayKeyRepository.create({
       token: uuidv4(),
@@ -50,6 +76,23 @@ export class EventService {
     );
     if (authedUser == null) return null;
     return this.userService.findOne(authedUser.userId);
+  }
+
+  removeSocketId(socketId: string) {
+    const authenticatedUserList = Object.values(this.authenticatedUsers);
+    for (const au of authenticatedUserList) {
+      let found = false;
+      au.socketIds = au.socketIds.filter((si) => {
+        if (si === socketId) {
+          found = true;
+          return false;
+        }
+        return true;
+      });
+      if (found) {
+        return;
+      }
+    }
   }
 
   private keyForToken(token: string) {

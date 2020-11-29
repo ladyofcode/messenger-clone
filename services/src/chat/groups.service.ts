@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Group } from 'src/entities/group.entity';
-import { getConnection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 
@@ -11,9 +11,17 @@ export class GroupsService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
+  async allUsersIn(groupId: number): Promise<User[]> {
+    const group = await this.groupRepository.findOne({
+      relations: ['users'],
+      where: { id: groupId },
+    });
+    return group.users;
+  }
+
   async allFor(userId: number): Promise<Group[]> {
     const user = await this.userRepository.findOne({
-      relations: ['groups'],
+      relations: ['groups', 'groups.users'],
       where: {
         id: userId,
       },
@@ -26,7 +34,7 @@ export class GroupsService {
   async groupForContactUser(currentUser: User, contactUser: User) {
     const groupsCurrentUser = await this.allFor(currentUser.id);
     const existingGroup = groupsCurrentUser.find((group) => {
-      if (group.users.length !== 2) return;
+      if (group.users == null || group.users.length !== 2) return;
       for (const user of group.users) {
         if (user.id !== currentUser.id && user.id !== contactUser.id)
           return false;
@@ -49,7 +57,7 @@ export class GroupsService {
     const group = this.groupRepository.create({
       name,
     });
-    this.groupRepository.save(group);
+    await this.groupRepository.save(group);
     return group;
   }
 
