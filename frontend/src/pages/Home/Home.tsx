@@ -11,17 +11,17 @@ const Home: React.FC = () => {
   const contacts = useContacts();
   const { logoutAccount, token } = useAuth();
 
-  useEffect(() => {
-    if (token) {
-      socket.emit("authenticate", { token }, (data: any) => {
-        console.log(data);
-      });
-    }
+  // useEffect(() => {
+  //   if (token) {
+  //     socket.emit("authenticate", { token }, (data: any) => {
+  //       console.log(data);
+  //     });
+  //   }
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [token]);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [token]);
 
   if (contacts.loading) {
     return <Transition />;
