@@ -78,6 +78,23 @@ export class EventService {
     return this.userService.findOne(authedUser.userId);
   }
 
+  removeSocketId(socketId: string) {
+    const authenticatedUserList = Object.values(this.authenticatedUsers);
+    for (const au of authenticatedUserList) {
+      let found = false;
+      au.socketIds = au.socketIds.filter((si) => {
+        if (si === socketId) {
+          found = true;
+          return false;
+        }
+        return true;
+      });
+      if (found) {
+        return;
+      }
+    }
+  }
+
   private keyForToken(token: string) {
     return this.gatewayKeyRepository.findOne({
       relations: ['user'],
